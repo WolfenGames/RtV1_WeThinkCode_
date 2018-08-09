@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/07 14:34:05 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/09 08:03:11 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ typedef struct		s_raytrace
 
 void				put_pixel(float x, float y, int col, t_raytrace *rt);
 
-t_bool				intersects(t_obj o, t_vec o_ray, t_ray r, float *t[2]);
 double				vec_len(t_vec len);
 
 t_vec				normalise(t_vec v);

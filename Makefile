@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jwolf <jwolf@42.fr>                        +#+  +:+       +#+         #
+#    By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/06 10:11:48 by jwolf             #+#    #+#              #
-#    Updated: 2018/08/07 09:19:14 by jwolf            ###   ########.fr        #
+#    Updated: 2018/08/09 08:04:22 by jwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ DIR_S = srcs
 
 DIR_O = obj
 
-SOURCES = main.c ray.c draw.c math_vec.c
+SOURCES = vecs.c
 
 OBJECTS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
