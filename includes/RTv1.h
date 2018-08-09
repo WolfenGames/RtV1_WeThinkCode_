@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/09 08:23:52 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/09 10:34:14 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ typedef struct		s_ray
 typedef	enum		s_type
 {
 					NONE = 0,
-					EYE = 1,
-					SPHERE = 2,
-					PLANE = 3,
-					CONE = 4,
-					LIGHT_SPOT = 5,
-					LIGHT_DIR = 6,
-					LIGHT_CONE = 7
+					CAMERA = 1,
+					EYE = 2,
+					SPHERE = 3,
+					PLANE = 4,
+					CONE = 5,
+					LIGHT_SPOT = 6,
+					LIGHT_DIR = 7,
+					LIGHT_CONE = 8
 }					t_type;
 /*
 **	Mat[0] = Local_pos;
@@ -64,8 +65,8 @@ typedef struct		s_raytrace
 {
 	void			*mlx;
 	void			*win;
-	void			*img;
-	void			*data;
+	void			**img;
+	void			**data;
 	int				w;
 	int				h;
 	int				bpp;
@@ -74,8 +75,12 @@ typedef struct		s_raytrace
 	t_obj			*obj;
 }					t_raytrace;
 
-void				put_pixel(float x, float y, int col, t_raytrace *rt);
+void				put_pixel(double pos[2], int n, t_raytrace *rt, int col);
+void    			new_image(t_raytrace *r, int n, int deltax, int deltay);
+void   				debug_text(t_raytrace *r);
+void				info(t_raytrace *r);
 void				trace(t_raytrace *r);
+void				back(t_raytrace *r);
 
 double				vec_len(t_vec len);
 
