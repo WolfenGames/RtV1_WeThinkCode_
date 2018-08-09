@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/09 08:03:11 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/09 08:23:52 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct		s_raytrace
 }					t_raytrace;
 
 void				put_pixel(float x, float y, int col, t_raytrace *rt);
+void				trace(t_raytrace *r);
 
 double				vec_len(t_vec len);
 

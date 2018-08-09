@@ -6,7 +6,7 @@
 #    By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/06 10:11:48 by jwolf             #+#    #+#              #
-#    Updated: 2018/08/09 08:04:22 by jwolf            ###   ########.fr        #
+#    Updated: 2018/08/09 08:24:16 by jwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ DIR_S = srcs
 
 DIR_O = obj
 
-SOURCES = vecs.c
+SOURCES = main.c draw.c trace.c vecs.c
 
 OBJECTS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
