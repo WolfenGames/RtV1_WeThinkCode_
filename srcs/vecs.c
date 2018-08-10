@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/07 13:38:41 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/10 09:25:17 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/10 09:40:49 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ t_vec	vec_flip(t_vec v)
 	v.y = -v.y;
 	v.z = -v.z;
 	return (v);
+}
+
+double	dot(t_vec a, t_vec b)
+{
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
 double	vec_len(t_vec v)

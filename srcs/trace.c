@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/10 09:01:42 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/10 10:14:01 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,28 @@ void	ray_hit(float x, float y)
 {
 	(void)y;
 	(void)x;
+}
+
+t_bool intersect_circ(t_ray *r, t_obj o, float *a, float *b)
+{
+	t_vec	l;
+	float	tca;
+	float	thc;
+	float	d2;
+
+	o.radius = o.mat[3].w;
+	o.radius2 = o.radius * o.radius;
+	l = minus_vec_vec(o.mat[3], r->ori);
+	tca = dot(l, r->dir);
+	if (tca < 0)
+		return (FALSE);
+	d2 = dot(l, l) - tca * tca;
+	if (d2 > (o.radius2))
+		return (FALSE);
+	thc = sqrt(o.radius2 - d2);
+	*a = tca - thc;
+	*b = tca + thc;
+	return (TRUE);
 }
 
 void	info(t_raytrace *r)
@@ -77,9 +99,9 @@ void	trace(t_raytrace *r)
 		while (pos[1] < r->h)
 		{
 			//TODO: RayStuff
-			if (100 * (pos[0] + pos[1] * r->w - 200) / (r->w * r->h) > prev_per + 1)
+			if (50 * (pos[0] + pos[1] * r->w - 200) / (r->w * r->h) > prev_per + 1)
 			{
-				prev_per = 100 * (pos[0] + pos[1] * r->w - 200) / (r->w * r->h);
+				prev_per = 50 * (pos[0] + pos[1] * r->w - 200) / (r->w * r->h);
 				ft_putstr("=");
 			}
 			pos[1] += .1f;
