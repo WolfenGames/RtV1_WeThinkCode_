@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trace.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
+/*   By: jwolf <jwolf@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/10 11:32:09 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/11 00:13:17 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,31 @@ t_vec	tracer(t_ray *r, t_raytrace *rt, int *depth)
 						mult_vec(refraction, (1 - fresneleffect))), mult_vec(o->surface_col, o->trans));
 		}else
 		{
+			int		i;
 
+			i = 0;
+			while (rt->obj[i].type == SPHERE)
+			{
+				if (rt->obj[i].emmision_col.x > 0)
+				{
+					t_vec	trans = (t_vec){1, 1, 1, 0};
+					t_vec	lightdir = add_vec_vec(rt->obj[i].mat[3], phit);
+					lightdir = normalise(lightdir);
+					while (rt->obj[j].type == SPHERE)
+					{
+						if (i != j)
+						{
+							float t[2];
+							if (intersect_circ(r, rt->obj[j], t[0], t[1]))
+							{
+								trans = (t_vec){0, 0, 0};
+								break;
+							}
+						}
+					}
+				}
+				surf_col
+			}
 		}
 	}
 }
