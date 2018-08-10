@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/10 09:41:59 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/10 10:58:08 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void				back(t_raytrace *r);
 
 double				vec_len(t_vec len);
 double				dot(t_vec a, t_vec b);
+double				mix(float a, float b, float mix);
 
 t_vec				normalise(t_vec v);
 t_vec				mult_vec(t_vec v, double a);

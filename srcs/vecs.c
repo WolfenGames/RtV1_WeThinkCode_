@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/07 13:38:41 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/10 09:40:49 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/10 10:57:51 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,9 @@ double	dot(t_vec a, t_vec b)
 double	vec_len(t_vec v)
 {
 	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
+
+double	mix(float a, float b, float mix)
+{
+	return ((double)(b * mix + a * (1 - mix)));
 }

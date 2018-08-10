@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/10 10:14:01 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/10 11:19:18 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,87 @@ void	back(t_raytrace *r)
 		pos[0] += .1f;
 	}
 	mlx_put_image_to_window(r->mlx, r->win, r->img[0], 0, 0);
+}
+
+t_vec	tracer(t_ray *r, t_raytrace *rt, int *depth)
+{
+	float	near;
+	float	*t[2];
+	t_obj	*o;
+	int		i;
+	float	surf_col;
+	t_vec	phit;
+	t_vec	nhit;
+	float	bias;
+	t_bool	inside;
+	float	facingratio;
+	float	fresneleffect;
+	t_vec	refldir;
+	t_vec	reflection;
+	t_vec	refraction;
+
+	near = INFINITY;
+	i = 0;
+	while (rt->obj[i].type > 2)
+	{
+		*t[0] = INFINITY;
+		*t[1] = INFINITY;
+		if (intersect_circ(r, rt->obj[i], t[0], t[1]))
+		{
+			if (t[0] < 0)
+				t[0] = t[1];
+			if (*t[0] < near)
+			{
+				near = *t[0];
+				*o = rt->obj[i];
+			}
+		}
+		if (!o)
+			return ((t_vec){255,255,255, 0});
+		surf_col = 0;
+		phit = mult_vec(add_vec_vec(r->ori, r->dir), near);
+		nhit = minus_vec_vec(phit, o->mat[0]);
+		nhit = normalise(nhit);
+		bias = 1e-4;
+		inside = FALSE;
+		if (dot(r->dir, nhit) > 0)
+		{
+			nhit = vec_flip(nhit);
+			inside = TRUE;
+		}
+		if ((o->trans > 0 || o->reflec > 0) && depth < MAX_RAY_DEPTH)
+		{
+			facingratio = dot(vec_flip(r->dir), nhit);
+			fresneleffect = mix(pow(1 - facingratio, 3), 1, 0.1f);
+			refldir = minus_vec_vec(r->dir, mult_vec(nhit, dot(r->dir, nhit) * 2));
+			refldir = normalise(refldir);
+			t_ray	r2;
+			r2.ori = mult_vec(add_vec_vec(phit, nhit), bias);
+			r2.dir = refldir;
+			reflection = tracer(&r2, rt, depth + 1);
+		}
+		if (o->trans)
+		{
+			float	ior;
+			float	eta;
+			float	cosi;
+			float	k;
+
+			ior = 1.1;
+			eta = (inside) ? ior : 1 / ior;
+			cosi = dot(vec_flip(nhit), r->dir);
+			k = 1 - eta * eta * (1 - cosi * cosi);
+			t_vec	refdir;
+			t_ray	r3;
+
+			refdir = mult_vec(add_vec_vec(mult_vec(r->dir, eta), nhit), (eta * cosi - sqrt(k)));
+			refdir = normalise(refdir);
+			r3.ori = mult_vec(add_vec_vec(phit, nhit), bias);
+			r3.dir = refldir;
+			refraction = tracer(&r3, rt, depth + 1);
+		}
+		//surf_col = mult_vec(reflection, fresneleffect) + mult_vec
+	}
 }
 
 void	trace(t_raytrace *r)
