@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/09 10:34:14 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/10 09:18:43 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ typedef struct		s_vec
 }					t_vec;
 typedef struct		s_ray
 {
-	int				hit;
-	double			dir;
+	t_vec			ori;
+	t_vec			dir;
+	double			len;
 }					t_ray;
 typedef	enum		s_type
 {
@@ -42,7 +43,8 @@ typedef	enum		s_type
 					CONE = 5,
 					LIGHT_SPOT = 6,
 					LIGHT_DIR = 7,
-					LIGHT_CONE = 8
+					LIGHT_CONE = 8,
+					LIGHT_POINT = 9
 }					t_type;
 /*
 **	Mat[0] = Local_pos;

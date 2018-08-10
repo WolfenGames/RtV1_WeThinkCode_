@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:18:45 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/09 11:11:55 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/10 09:01:30 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	create_objects(t_raytrace *r)
 	r->obj[0].mat[2] = (t_vec){0, 0, 0, 0};
 	r->obj[0].mat[3] = (t_vec){0, 0, 0, 0};
 	r->obj[1].type = EYE;
-	r->obj[1].mat[0] = (t_vec){20, 20, 0, 0};
+	r->obj[1].mat[0] = (t_vec){0, 0, 0, 0};
 	r->obj[1].mat[1] = (t_vec){0, 0, 0, 0};
 	r->obj[1].mat[2] = (t_vec){0, 0, 0, 0};
 	r->obj[1].mat[3] = (t_vec){0, 0, 0, 0};
@@ -66,12 +66,12 @@ void	create_objects(t_raytrace *r)
 	r->obj[2].mat[2] = (t_vec){0, 0, 0, 0};
 	r->obj[2].mat[3] = (t_vec){0, 90, 0, 0};
 	r->obj[3].type = SPHERE;
-	r->obj[3].mat[0] = (t_vec){0, 10, 0, 0};
+	r->obj[3].mat[0] = (t_vec){0, 0, 0, 0};
 	r->obj[3].mat[1] = (t_vec){0, 0, 0, 0};
 	r->obj[3].mat[2] = (t_vec){0, 0, 0, 0};
 	r->obj[3].mat[3] = (t_vec){0, 0, 0, 0};
 	r->obj[4].type = SPHERE;
-	r->obj[4].mat[0] = (t_vec){20, 20, 0, 0};
+	r->obj[4].mat[0] = (t_vec){0, 0, 0, 0};
 	r->obj[4].mat[1] = (t_vec){0, 0, 0, 0};
 	r->obj[4].mat[2] = (t_vec){0, 0, 0, 0};
 	r->obj[4].mat[3] = (t_vec){0, 0, 0, 0};

@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/09 10:43:23 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/10 09:01:42 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,27 @@ void	back(t_raytrace *r)
 void	trace(t_raytrace *r)
 {
 	double	pos[2];
+	int		prev_per;
 	
 	new_image(r, 1, -200, 0);
 	pos[0] = 0;
+	prev_per = -1;
+	ft_putstr("Loading... \n[");
 	while (pos[0] < r->w - 200)
 	{
 		pos[1] = 0;
 		while (pos[1] < r->h)
 		{
-			put_pixel(pos, 1, r, 0x18545E);
-			//ray_hit(x, y);
+			//TODO: RayStuff
+			if (100 * (pos[0] + pos[1] * r->w - 200) / (r->w * r->h) > prev_per + 1)
+			{
+				prev_per = 100 * (pos[0] + pos[1] * r->w - 200) / (r->w * r->h);
+				ft_putstr("=");
+			}
 			pos[1] += .1f;
 		}
 		pos[0] += .1f;
 	}
 	mlx_put_image_to_window(r->mlx, r->win, r->img[1], 200, 0);
+	ft_putstr("]\n");
 }
