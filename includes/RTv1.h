@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/15 17:17:06 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/15 18:09:08 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,11 @@ typedef	enum		s_type
 					SPHERE = 3,
 					PLANE = 4,
 					CONE = 5,
-					LIGHT_SPOT = 6,
-					LIGHT_DIR = 7,
-					LIGHT_CONE = 8,
-					LIGHT_POINT = 9
+					CYLINDER = 6,
+					LIGHT_SPOT = 7,
+					LIGHT_DIR = 8,
+					LIGHT_CONE = 9,
+					LIGHT_POINT = 10
 }					t_type;
 typedef struct		s_obj
 {
@@ -61,6 +62,7 @@ typedef struct		s_obj
 	t_type			type;
 	double			radius;
 	double			radius2;
+	double			fov;
 	unsigned int	surface_col;
 }					t_obj;
 typedef struct		s_raytrace

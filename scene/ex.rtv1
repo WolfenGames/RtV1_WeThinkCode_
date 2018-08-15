@@ -3,6 +3,7 @@
 -Origin 0,0,0
 -Rotation 0,0,0
 -Fov 80
+-Type Camera
 >Head
 -Origin 0,0,0
 -Rotation 0,0,0
@@ -22,7 +23,7 @@
 -Origin 0,0,0
 -Rotation 0,0,0
 -Radius 2
--Type sphere
+-Type SPHERE
 >Head
 -Origin 0,0,0
 -Rotation 0,0,0

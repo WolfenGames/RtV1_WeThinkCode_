@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:18:45 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/15 17:12:54 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/15 18:05:41 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void	create_objects(t_raytrace *r)
 	int			fd;
 
 	r->obj = (t_obj *)malloc(sizeof(t_obj));
-	r->objsize = 0;
+	r->obj[0].name = "Camera";
+	r->obj[0].type = CAMERA;
+	r->objsize = 1;
 	fd = open("scene/ex.rtv1", O_RDONLY);
 	load_file(fd, r);
 	close(fd);
