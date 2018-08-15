@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:18:45 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/14 16:55:51 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/15 17:12:54 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,13 @@ void	set_hooks(t_raytrace *r)
 
 void	create_objects(t_raytrace *r)
 {
-	r->obj = (t_obj *)malloc(sizeof(t_obj) * 5);
-	r->obj[0].type = CAMERA;
-	r->obj[0].ori[0] = 0;
-	r->obj[0].ori[1] = 0;
-	r->obj[0].ori[2] = 20;
-	r->obj[0].rot[0] = 90;
-	r->obj[1].type = EYE;
-	r->obj[2].type = LIGHT_DIR;
-	r->obj[3].type = SPHERE;
-	r->obj[4].type = SPHERE;
-	r->objsize = 5;
+	int			fd;
+
+	r->obj = (t_obj *)malloc(sizeof(t_obj));
+	r->objsize = 0;
+	fd = open("scene/ex.rtv1", O_RDONLY);
+	load_file(fd, r);
+	close(fd);
 }
 
 int		main(void)
@@ -70,7 +66,7 @@ int		main(void)
 	r->img = (void **)malloc(sizeof(void *) * 3);
 	r->data = (void **)malloc(sizeof(void *) * 3);
 	create_objects(r);
-	set_hooks(r);
-	mlx_loop(r->mlx);
+	//set_hooks(r);
+	//mlx_loop(r->mlx);
 	return (0);
 }

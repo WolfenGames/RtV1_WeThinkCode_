@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/14 18:38:30 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/15 17:17:06 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,18 @@
 # include <math.h>
 # include <stdio.h>
 
-# define MAX_RAY_DEPTH 5
+# define MAX_RAY_DEPTH	5
 
 typedef double		d_mat;
 
 typedef double		t_vec[3];
 typedef double		t_matrix[4][4];
+typedef enum		s_img
+{
+					SIDE_BAR = 0,
+					SCREEN = 1,
+					LOGO = 2
+}					t_img;
 typedef struct		s_ray
 {
 	t_vec			ori;
@@ -45,16 +51,16 @@ typedef	enum		s_type
 }					t_type;
 typedef struct		s_obj
 {
+	char			*name;
 	double			wto[4][4];
 	double			otw[4][4];
 	t_vec			rot;
 	t_vec			ori;
 	t_vec			norm;
+	t_vec			size;
 	t_type			type;
 	double			radius;
 	double			radius2;
-	double			width;
-	double			height;
 	unsigned int	surface_col;
 }					t_obj;
 typedef struct		s_raytrace
@@ -69,7 +75,7 @@ typedef struct		s_raytrace
 	int				sl;
 	int				endn;
 	t_obj			*obj;
-	double			objsize;
+	int				objsize;
 }					t_raytrace;
 
 void				put_pixel(double pos[2], int n, t_raytrace *rt, int col);
@@ -88,6 +94,8 @@ void				calccam(t_obj *cam);
 void				inver(t_matrix src, t_matrix ret);
 void				cofactor(double a[4][4], double size);
 void				mult_mat(double a[4][4], double b[4][4], double r[4][4]);
+void				load_file(int fd, t_raytrace *r);
+t_obj  				*find_obj(char *name, t_raytrace *r);
 
 double				vec_len(t_vec v);
 double				dot(t_vec a, t_vec b);
@@ -96,5 +104,16 @@ double				maxd(double a, double b);
 double  			*mult_vec(double a[4][4], double v[3], double r[3]);
 double  			*mult_trans(double a[4][4], double v[3], double r[3]);
 double				angle_find(t_vec a, t_vec b);
+
+double				*mult_vec_f(t_vec v, double a, t_vec r);
+double				*mult_vec_vec(t_vec a, t_vec b, t_vec r);
+double				*add_vec_vec(t_vec a, t_vec b, t_vec r);
+double				*add_vec(t_vec v, double a, t_vec r);
+double				*minus_vec(t_vec v, double a, t_vec r);
+double				*minus_vec_vec(t_vec a, t_vec b, t_vec r);
+void				vec_dup(t_vec a, t_vec b);
+void				vec_swap(t_vec a, t_vec b);
+double				*vec_flip(t_vec v, t_vec r);
+double				maxd(double a, double b);
 
 #endif

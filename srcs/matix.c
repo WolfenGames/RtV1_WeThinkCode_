@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 11:26:05 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/14 18:45:54 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/15 16:13:13 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,17 +112,20 @@ double	angle_find(t_vec a, t_vec b)
 
 double	dot(t_vec a, t_vec b)
 {
-	return (a[0] * b[0] + a[1] * b[1] + a[2] * b[2]);
+//	printf("DOT-A::%lf		%lf		%lf\nDOT-B::%lf		%lf		%lf\nVALUE::%lf\n",
+//			a[0], a[1], a[2], b[0], b[1], b[2],
+//			(a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]));
+	return ((a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]));
 }
 
 void	normalise(t_vec v)
 {
 	double	nor2;
 
-	nor2 = sqrt(dot(v, v));
-	v[0] /= nor2;
-	v[1] /= nor2;
-	v[2] /= nor2;
+	nor2 = 1 / sqrt((v[0] * v[0]) + (v[1] * v[1]) + (v[2] * v[2]));
+	v[0] *= nor2;
+	v[1] *= nor2;
+	v[2] *= nor2;
 }
 
 double	vec_len(t_vec v)
@@ -224,7 +227,69 @@ double	determinate(double a[4][4], double size)
 		ret = ret + s * (a[0][c] * determinate(b, size - 1));
 		size = -1 * s;
 	}
-	printf("RIP2 %lf\n", ret);
+	return (ret);
+}
+
+void		m4_dup(t_matrix src, t_matrix ret)
+{
+	int i;
+	int j;
+
+	j = -1;
+	while (++j < 4)
+	{
+		i = -1;
+		while (++i < 4)
+			ret[i][j] = src[i][j];
+	}
+}
+
+static void	det_work(t_matrix a, t_matrix b, double size, int c)
+{
+	int	i[4];
+
+	i[2] = 0;
+	i[3] = 0;
+	i[0] = -1;
+	while (++i[0] < size)
+	{
+		i[1] = -1;
+		while (++i[1] < size)
+		{
+			b[i[0]][i[1]] = 0;
+			if (i[0] != 0 && i[1] != c)
+			{
+				b[i[2]][i[3]] = a[i[0]][i[1]];
+				if (i[3] < (size - 2))
+					i[3]++;
+				else
+				{
+					i[3] = 0;
+					i[2]++;
+				}
+			}
+		}
+	}
+}
+
+double		determinant(t_matrix a, double size)
+{
+	double		s;
+	double		ret;
+	t_matrix	b;
+	int			c;
+
+	s = 1;
+	ret = 0;
+	if (size == 1)
+		return (a[0][0]);
+	c = -1;
+	while (++c < size)
+	{
+		det_work(a, b, size, c);
+		ret = ret + s * (a[0][c] * determinant(b, size - 1));
+		s = -1 * s;
+	}
 	return (ret);
 }
 
@@ -235,8 +300,7 @@ void	transpose(double a[4][4], double fac[4][4], double size)
 	double	d;
 
 	i = -1;
-	d = determinate(a, size);
-	printf("RIP %lf\n", d);
+	d = determinant(a, size);
 	if (d != 0)
 		while (++i < size)
 		{
@@ -262,24 +326,10 @@ void	cofactor(double a[4][4], double size)
 		{
 			calco(a, b, size, dim);
 			fac[dim[0]][dim[1]] = pow(-1, dim[0] + dim[1])
-				* determinate(b, size - 1);
+				* determinant(b, size - 1);
 		}
 	}
 	transpose(a, fac, size);
-}
-
-void		m4_dup(t_matrix src, t_matrix ret)
-{
-	int i;
-	int j;
-
-	j = -1;
-	while (++j < 4)
-	{
-		i = -1;
-		while (++i < 4)
-			ret[i][j] = src[i][j];
-	}
 }
 
 void	inver(t_matrix src, t_matrix ret)
@@ -307,4 +357,82 @@ void	calccam(t_obj *cam)
 	mult_vec(cam->otw, b, b);
 	fill_rot_v(a, b, (cam->rot[2] * M_PI) / 180.0);
 	mult_mat(cam->otw, a, cam->otw);
+}
+
+double	*mult_vec_f(t_vec v, double a, t_vec r)
+{
+	r[0] = v[0] * a;
+	r[1] = v[1] * a;
+	r[2] = v[2] * a;
+	return (r);
+}
+
+double	*mult_vec_vec(t_vec a, t_vec b, t_vec r)
+{
+	r[0] = a[0] * b[0];
+	r[1] = a[1] * b[1];
+	r[2] = a[2] * b[2];
+	return (r);
+}
+
+double	*add_vec_vec(t_vec a, t_vec b, t_vec r)
+{
+	r[0] = a[0] + b[0];
+	r[1] = a[1] + b[1];
+	r[2] = a[2] + b[2];
+	return (r);
+}
+
+double	*add_vec(t_vec v, double a, t_vec r)
+{
+	r[0] = v[0] + a;
+	r[1] = v[1] + a;
+	r[2] = v[2] + a;
+	return (r);
+}
+
+double	*minus_vec(t_vec v, double a, t_vec r)
+{
+	r[0] = v[0] - a;
+	r[1] = v[1] - a;
+	r[2] = v[2] - a;
+	return (r);
+}
+
+double	*minus_vec_vec(t_vec a, t_vec b, t_vec r)
+{
+	r[0] = a[0] - b[0];
+	r[1] = a[1] - b[1];
+	r[2] = a[2] - b[2];
+	return (r);
+}
+
+void	vec_dup(t_vec a, t_vec b)
+{
+	b[0] = a[0];
+	b[1] = a[1];
+	b[2] = a[2];
+}
+
+void	vec_swap(t_vec a, t_vec b)
+{
+	t_vec	t;
+
+	vec_dup(a, t);
+	vec_dup(b, a);
+	vec_dup(t, b);
+}
+
+double	*vec_flip(t_vec v, t_vec r)
+{
+	mult_vec_f(v, -1, r);
+	return (r);
+}
+
+double	maxd(double a, double b)
+{
+	if (a < b)
+		return (b);
+	else
+		return (a);
 }
