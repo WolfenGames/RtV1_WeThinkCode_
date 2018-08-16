@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jwolf <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/06 10:11:48 by jwolf             #+#    #+#              #
-#    Updated: 2018/07/09 06:37:00 by jwolf            ###   ########.fr        #
+#    Updated: 2018/08/16 07:39:04 by jwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SOURCES = ft_atoi.c ft_bzero.c ft_clearspace.c ft_intminmax.c ft_isalnum.c \
 			ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnew.c \
 			ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c \
 			ft_strtrim.c ft_strtrimcpy.c ft_tolower.c ft_toupper.c \
-			ft_wordcount.c get_next_line.c ft_ishex.c
+			ft_wordcount.c get_next_line.c ft_ishex.c ft_atof.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 OBJECTS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))

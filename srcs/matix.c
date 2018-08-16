@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 11:26:05 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/15 16:13:13 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/16 11:36:18 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ double  *mult_trans(double a[4][4], double v[3], double r[3])
 {
 	double  cpy[3];
 
-	cpy[0] = v[0] * a[0][0] + v[1] * a[0][1] + v[2] * a[0][2] + v[3] + a[3][0];
-	cpy[1] = v[0] * a[1][0] + v[1] * a[1][1] + v[2] * a[1][2] + v[3] + a[3][1];
-	cpy[2] = v[0] * a[2][0] + v[1] * a[2][1] + v[2] * a[2][2] + v[3] + a[3][2];
+	cpy[0] = v[0] * a[0][0] + v[1] * a[0][1] + v[2] * a[0][2] + a[3][0];
+	cpy[1] = v[0] * a[1][0] + v[1] * a[1][1] + v[2] * a[1][2] + a[3][1];
+	cpy[2] = v[0] * a[2][0] + v[1] * a[2][1] + v[2] * a[2][2] + a[3][2];
 	ft_memmove(r, cpy, 3 * sizeof(double));
 	return (r);
 }
@@ -112,9 +112,6 @@ double	angle_find(t_vec a, t_vec b)
 
 double	dot(t_vec a, t_vec b)
 {
-//	printf("DOT-A::%lf		%lf		%lf\nDOT-B::%lf		%lf		%lf\nVALUE::%lf\n",
-//			a[0], a[1], a[2], b[0], b[1], b[2],
-//			(a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]));
 	return ((a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]));
 }
 
@@ -357,6 +354,22 @@ void	calccam(t_obj *cam)
 	mult_vec(cam->otw, b, b);
 	fill_rot_v(a, b, (cam->rot[2] * M_PI) / 180.0);
 	mult_mat(cam->otw, a, cam->otw);
+}
+
+void	obj_thingies(t_obj *o)
+{
+	double	a[4][4];
+
+	ft_bzero(o->otw, sizeof(double) * 16);
+	ft_bzero(a, sizeof(double) * 16);
+	fill_mat_rot_y(o->otw, o->rot[0] * M_PI / 180.0);
+	fill_mat_rot_x(a, o->rot[1] * M_PI / 180.0);
+	mult_mat(o->otw, a, o->otw);
+	fill_mat_rot_z(a, (o->rot[2] * M_PI) / 180.0);
+	mult_mat(o->otw, a, o->otw);
+	fill_mat_trans(a, o->ori);
+	mult_mat(o->otw, a, o->otw);
+	inver(o->otw, o->wto);
 }
 
 double	*mult_vec_f(t_vec v, double a, t_vec r)

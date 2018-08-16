@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:18:45 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/15 18:05:41 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/16 12:45:26 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		main(void)
 	r->img = (void **)malloc(sizeof(void *) * 3);
 	r->data = (void **)malloc(sizeof(void *) * 3);
 	create_objects(r);
-	//set_hooks(r);
-	//mlx_loop(r->mlx);
+	set_hooks(r);
+	mlx_loop(r->mlx);
 	return (0);
 }

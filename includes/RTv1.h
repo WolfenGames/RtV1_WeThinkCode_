@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/15 18:09:08 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/16 11:38:43 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ typedef enum		s_img
 					SCREEN = 1,
 					LOGO = 2
 }					t_img;
+typedef enum		s_v
+{
+					ORI = 0,
+					ROT = 1,
+					SIZE = 2,
+					FOV = 3,
+					COL = 4,
+					RADIUS = 5
+}					t_v;
 typedef struct		s_ray
 {
 	t_vec			ori;
@@ -97,6 +106,7 @@ void				inver(t_matrix src, t_matrix ret);
 void				cofactor(double a[4][4], double size);
 void				mult_mat(double a[4][4], double b[4][4], double r[4][4]);
 void				load_file(int fd, t_raytrace *r);
+void    			vec_assign(t_obj *o, t_v v, char *s);
 t_obj  				*find_obj(char *name, t_raytrace *r);
 
 double				vec_len(t_vec v);
@@ -115,7 +125,14 @@ double				*minus_vec(t_vec v, double a, t_vec r);
 double				*minus_vec_vec(t_vec a, t_vec b, t_vec r);
 void				vec_dup(t_vec a, t_vec b);
 void				vec_swap(t_vec a, t_vec b);
+void				obj_thingies(t_obj *o);
 double				*vec_flip(t_vec v, t_vec r);
 double				maxd(double a, double b);
+
+int					get_col(char *line);
+int					colour_grad(int col1, int col2, float r);
+char    			*get_obj_name(t_type i);
+char				ft_char_tolower(char c);
+char				ft_char_toupper(char c);
 
 #endif

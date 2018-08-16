@@ -1,33 +1,25 @@
--origin
 >Camera
--Origin 0,0,0
--Rotation 0,0,0
 -Fov 80
--Type Camera
+-Origin 0,0,10
+-Rotation 0,0,0
 >Head
 -Origin 0,0,0
 -Rotation 0,0,0
 -Radius 2
+-Color FF0000
 -Type sphere
->Head
--Origin 0,0,0
+>Ear
+-Origin 0,2,-2
 -Rotation 0,0,0
 -Radius 2
+-Color 00000FF
 -Type sphere
->Head
--Origin 0,0,0
+>Ear
+-Origin 2,2,-2
+-Radius 4
 -Rotation 0,0,0
--Radius 2
--Type sphere
->Head
--Origin 0,0,0
+>Floor
+-Origin 0,-10,0
 -Rotation 0,0,0
--Radius 2
--Type SPHERE
->Head
--Origin 0,0,0
--Rotation 0,0,0
--Radius 2
--Type sphere
->Tail
->Arm
+-Color afaeff
+-Type plane
