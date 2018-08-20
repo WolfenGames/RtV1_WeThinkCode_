@@ -6,11 +6,12 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 07:38:09 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/16 12:43:31 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/17 12:59:28 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RTv1.h"
+#include "string.h"
 
 void    vec_assign(t_obj *o, t_v v, char *s)
 {
@@ -30,5 +31,7 @@ void    vec_assign(t_obj *o, t_v v, char *s)
         free(sp[i]);
         i++;
     }
+    if (sp[i])
+        free(sp[i]);
     free(sp);
 }

@@ -6,7 +6,7 @@
 #    By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/06 10:11:48 by jwolf             #+#    #+#              #
-#    Updated: 2018/08/16 07:51:38 by jwolf            ###   ########.fr        #
+#    Updated: 2018/08/20 10:49:32 by jwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OS   = $(shell uname)
 
 CFLAGS += -Wextra -Wall -I./includes
 
-ATTACH = -L libft/ -lft -lmlx -framework OpenGL -framework AppKit
+ATTACH = -L libft/ -lft -lmlx -framework OpenGL -framework AppKit -O3
 
 C = gcc
 
@@ -27,7 +27,7 @@ DIR_S = srcs
 DIR_O = obj
 
 SOURCES = main.c draw.c trace.c matix.c parse.c objectstuff.c vecs.c color.c \
-			extra.c
+			extra.c cylinder.c cone.c
 
 OBJECTS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 

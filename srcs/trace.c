@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/16 12:47:17 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/17 11:39:47 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,35 @@ t_bool	quad(double a, double b, double c, double d[2])
 	return (TRUE);
 }
 
-int		inter_cone(t_ray ray, t_obj obj, double *n)
+int		inter_plane(t_ray *ray, t_obj *obj, double *n)
+{
+	t_ray	nr;
+	double	a;
+
+	mult_vec(obj->wto, ray->dir, nr.dir);
+	mult_trans(obj->wto, ray->ori, nr.ori);
+ 	if (!((nr.ori[1] < 0 && nr.dir[1] > 0) || (nr.ori[1] > 0 && nr.dir[1] < 0)))
+		return (0);
+	normalise(nr.dir);
+	a = ABS(nr.ori[1] / (nr.dir[1] - 0.0001));
+	if (a > *n)
+		return (0);
+	*n = a;
+	return (1);
+}
+
+/* int		inter_cylinder(t_ray ray, t_obj obj, double *n)
 {
 	t_vec	l;
 	double	a[3];
 	double	inter[2];
+	t_ray	nr;
 
-	minus_vec_vec(ray.ori, obj.ori, l);
-	a[0] = dot(ray.dir, ray.dir);
-	a[1] = 2 * dot(ray.dir, l);
+	mult_vec(obj.wto, ray.dir, nr.dir);
+	mult_trans(obj.wto, ray.ori, nr.ori);
+	minus_vec_vec(nr.ori, obj.ori, l);
+	a[0] = dot(nr.dir, nr.dir);
+	a[1] = 2 * dot(nr.dir, l);
 	a[2] = dot(l, l) - obj.radius2;
  	if (!quad(a[0], a[1], a[2], inter))
 		return(0);
@@ -85,26 +105,7 @@ int		inter_cone(t_ray ray, t_obj obj, double *n)
 		return (0);
 	*n = inter[0];
 	return (1);
-}
-
-int		inter_plane(t_ray ray, t_obj obj, double *n)
-{
-	t_ray	nr;
-	double	a;
-
-	mult_vec(obj.wto, ray.dir, nr.dir);
-//	printf("B::	%lf		%lf		%lf\n", nr.dir[0], nr.dir[1], nr.dir[2]);
-	mult_trans(obj.wto, ray.ori, nr.ori);
-//	printf("A::	%lf		%lf		%lf\n", nr.dir[0], nr.dir[1], nr.dir[2]);
- 	if (!((nr.dir[1] < 0 && nr.ori[1] > 0) || (nr.dir[1] > 0 && nr.ori[1] < 0)))
-		return (0);
-	normalise(nr.dir);
-	a = ABS(nr.ori[1] / (nr.dir[1] - 0.000001));
-	if (a > *n)
-		return (0);
-	*n = a;
-	return (1);
-}
+} */
 
 int		inter_sphere(t_ray ray, t_obj obj, double *n)
 {
@@ -131,28 +132,6 @@ int		inter_sphere(t_ray ray, t_obj obj, double *n)
 	return (1);
 }
 
-int		inter_cylinder(t_ray ray, t_obj obj, double *n)
-{
-	t_vec	l;
-	double	a[3];
-	double	inter[2];
-
-	minus_vec_vec(ray.ori, obj.ori, l);
-	a[0] = dot(ray.dir, ray.dir);
-	a[1] = 2 * dot(ray.dir, l);
-	a[2] = dot(l, l) - obj.radius2;
- 	if (!quad(a[0], a[1], a[2], inter))
-		return(0);
-	if (inter[0] < 0)
-		inter[0] = inter[1];
-	if (inter[0] < 0)
-		return(0);
-	if (inter[0] > *n)
-		return (0);
-	*n = inter[0];
-	return (1);
-}
-
 int		tracer(t_ray ray, t_raytrace *r, double n)
 {
 	int		x;
@@ -166,13 +145,13 @@ int		tracer(t_ray ray, t_raytrace *r, double n)
 			if (inter_sphere(ray, r->obj[x], &n))
 				col = x;
 		if (r->obj[x].type == CONE)
-			if (inter_cone(ray, r->obj[x], &n))
+			if (inter_cone(&ray, &r->obj[x], &n))
 				col = x;
 		if (r->obj[x].type == CYLINDER)
-			if (inter_cylinder(ray, r->obj[x], &n))
+			if (inter_cylinder(&ray, &r->obj[x], &n))
 				col = x;
 		if (r->obj[x].type == PLANE)
-			if (inter_plane(ray, r->obj[x], &n))
+			if (inter_plane(&ray, &r->obj[x], &n))
 				col = x;
 		x++;
 	}
@@ -214,8 +193,7 @@ void	trace(t_raytrace *r)
 	prev_per = -1;
 	ray.ori[0] = r->obj[0].ori[0];
 	ray.ori[1] = r->obj[0].ori[1];
-	ray.ori[2] = r->obj[0].ori[2];/* 
-	ft_putstr("Loading... \n["); */
+	ray.ori[2] = r->obj[0].ori[2];
 	calccam(&r->obj[0]);
 	while (pos[0] < r->w - 200)
 	{
@@ -230,16 +208,9 @@ void	trace(t_raytrace *r)
 			mult_vec(r->obj[0].otw, ray.dir, ray.dir);
 			normalise(ray.dir);
 			put_pixel(pos, SCREEN, r, tracer(ray, r, near));
-			//cast ray/
-/* 			if (100 * (pos[0] + pos[1] * r->w - 200) / (r->w * r->h) > prev_per + 1)
-			{
-				prev_per = 100 * (pos[0] + pos[1] * r->w - 200) / (r->w * r->h);
-				ft_putstr("=");
-			} */
 			pos[1]++;
 		}
 		pos[0]++;
 	}
-	mlx_put_image_to_window(r->mlx, r->win, r->img[1], 200, 0);/* 
-	ft_putstr("]\n"); */
+	mlx_put_image_to_window(r->mlx, r->win, r->img[1], 200, 0);
 }

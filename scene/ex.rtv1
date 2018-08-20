@@ -1,25 +1,59 @@
 >Camera
--Fov 80
--Origin 0,0,10
+-Fov 90
+-Origin 0,0,20
 -Rotation 0,0,0
 >Head
--Origin 0,0,0
+-Origin 0,0,-1
 -Rotation 0,0,0
--Radius 2
+-Radius 1
 -Color FF0000
 -Type sphere
->Ear
--Origin 0,2,-2
--Rotation 0,0,0
--Radius 2
--Color 00000FF
+>Head2
+-Origin 1,0,0
 -Type sphere
->Ear
--Origin 2,2,-2
--Radius 4
--Rotation 0,0,0
+-Radius 0.5
+>Head3
+-Origin -1,0,0
+-Radius 0.5
+-Type sphere
 >Floor
--Origin 0,-10,0
+-Origin 6,0,0
+-Rotation 0,0,90
+-Size 0,0,0
+-Color 0000FF
+-Type Plane
+>Floor2
+-Origin -6,0,0
+-Rotation 0,0,90
+-Size 0,0,0
+-Color FF00FF
+-Type Plane
+>Back Wall
+-Origin 0,0,-10
+-Rotation 0,90,0
+-Color 00FF00
+-Type Plane
+>Ground
+-Origin 0,-6,-6
 -Rotation 0,0,0
--Color afaeff
--Type plane
+-Color F0F0F0
+-Type Plane
+>Roof
+-Origin 0,6,-6
+-Rotation 0,0,0
+-Color F0F0F0
+-Type Plane
+>Hat
+-Origin 0,-3,0
+-Rotation 0,90,0
+-Radius 1
+-Color FF000F
+-Size 2,1,1
+-Type Cylinder
+>Hat2
+-Origin 0,0,0
+-Rotation 0,-90,0
+-Radius 2
+-Color 00fff2
+-Size 1,3,3
+-Type Cone

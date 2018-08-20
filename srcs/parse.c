@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 16:23:17 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/16 12:46:18 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/17 12:54:38 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		get_type(const char *s)
 		free(p);
 		return (LIGHT_POINT);
 	}
+	free(p);
 	return (NONE);
 }
 
@@ -69,15 +70,10 @@ void	setprop(t_obj *obj, char *line)
 {
 	char	*s;
 
-	if (obj == NULL)
-	{
-		ft_putendl("No object to set property");
-		return ;
-	}
 	s = ft_strmap(line, ft_char_tolower);
 	if (ft_strnequ(s, "type", 4))
 		obj->type = get_type(ft_strchr(line, ' ') + 1);
- 	if (ft_strnequ(s, "fov", 3))
+ 	 if (ft_strnequ(s, "fov", 3))
 		obj->fov = ft_atod(ft_strchr(line, ' ') + 1);
 	if (ft_strnequ(s, "origin", 6))
 		vec_assign(obj, ORI, ft_strchr(line, ' ') + 1);
@@ -103,8 +99,6 @@ void	apply(t_raytrace *r)
 	while (x < r->objsize)
 	{
 		obj_thingies(&r->obj[x]);
-//		for (int i = 0; i < 4; i++)
-//			printf("MAT::	%lf		%lf		%lf		%lf\n", r->obj[x].wto[i][0], r->obj[x].wto[i][1], r->obj[x].wto[i][2], r->obj[x].wto[i][3]);
 		x++;
 	}
 }
@@ -123,7 +117,7 @@ void    load_file(int fd, t_raytrace *r)
 			obj = find_obj(line + 1, r);
 		if (line[0] == '-' && obj)
 			setprop(obj, line + 1);
-		free(tmp);
+		free(line);
 	}
 	if (line)
 		free(line);

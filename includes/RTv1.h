@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/16 11:38:43 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/17 11:37:45 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,8 @@ int					colour_grad(int col1, int col2, float r);
 char    			*get_obj_name(t_type i);
 char				ft_char_tolower(char c);
 char				ft_char_toupper(char c);
+int					inter_cylinder(t_ray *ray, t_obj *obj, double *n);
+int					inter_cone(t_ray *ray, t_obj *obj, double *near);
+t_bool				quad(double a, double b, double c, double d[2]);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 07:36:55 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/16 09:10:54 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/17 13:00:29 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ double				ft_atod(const char *str)
 		num2 = ft_atoi(side[1]);
 		while (num2 > 1)
 			num2 /= 10.0;
+		free(side[1]);
 	}
+	free(side[0]);
+	free(side);
 	if (!side[1])
 		return ((double)num);
 	return ((double)(num + num2));

@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 17:01:49 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/15 17:19:22 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/17 12:51:30 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_obj	*new_obj(char *name, t_raytrace *r)
 {
-	t_obj *new_objs;
+	t_obj	*new_objs;
 
 	r->objsize += 1;
 	new_objs = (t_obj*)ft_memalloc(sizeof(t_obj) * r->objsize);
