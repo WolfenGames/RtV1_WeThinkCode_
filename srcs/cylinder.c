@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 11:23:31 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/21 06:54:56 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/21 10:18:09 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,23 @@ static int	c_bound(t_vec temp, t_obj *obj, double t[3], t_ray tempray)
 	return (1);
 }
 
-int			inter_cylinder(t_ray *ray, t_obj *obj, double *near)
+int			inter_cylinder(t_ray ray, t_obj obj, double *near)
 {
 	t_vec	temp;
 	t_ray	tempray;
 	double	c;
 	double	t[3];
 
-	if (!get_abc(*near, t, ray, obj))
+	if (!get_abc(*near, t, &ray, &obj))
 		return (0);
-	mult_vec(obj->wto, ray->dir, tempray.dir);
-	mult_trans(obj->wto, ray->ori, tempray.ori);
+	mult_vec(obj.wto, ray.dir, tempray.dir);
+	mult_trans(obj.wto, ray.ori, tempray.ori);
 	mult_vec_f(tempray.dir, t[2], temp);
 	add_vec_vec(tempray.ori, temp, temp);
 	c = atan2f(temp[1], temp[0]);
 	if (c < 0.0f)
 		c += 2.0f * M_PI;
-	if (!c_bound(temp, obj, t, tempray))
+	if (!c_bound(temp, &obj, t, tempray))
 		return (0);
 	if (*near < t[2])
 		return (0);

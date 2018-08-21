@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:18:45 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/17 13:33:06 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/21 09:59:14 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 
 int		update(t_raytrace *r)
 {
+	t_obj *o;
+
+	o = find_obj("Hat", r);
+	o->rot[0] += 5.f;
+	o->rot[1] += 5.f;
+	o->rot[2] += 5.f;
+	if (o)
+	{
+		obj_thingies(o);
+		o = NULL;
+	}
 	trace(r);
 	return (0);
 }
@@ -28,8 +39,10 @@ int		butt(int b, t_raytrace *r)
 
 int		keys(int key, t_raytrace *r)
 {
+
 	if (key == 53)
 		butt(0, r);
+	//trace(r);
 	return (0);
 }
 
@@ -37,6 +50,7 @@ void	set_hooks(t_raytrace *r)
 {
 	mlx_hook(r->win, 2, 0, keys, r);
 	mlx_hook(r->win, 17, 0, butt, r);
+	mlx_loop_hook(r->mlx, update, r);
 	back(r);
 	info(r);
 	trace(r);

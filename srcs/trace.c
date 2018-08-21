@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/21 06:53:52 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/21 10:18:14 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ t_bool	quad(double a, double b, double c, double d[2])
 	return (TRUE);
 }
 
-int		inter_plane(t_ray *ray, t_obj *obj, double *n)
+int		inter_plane(t_ray ray, t_obj obj, double *n)
 {
 	t_ray	nr;
 	double	a;
 
-	mult_vec(obj->wto, ray->dir, nr.dir);
-	mult_trans(obj->wto, ray->ori, nr.ori);
+	mult_vec(obj.wto, ray.dir, nr.dir);
+	mult_trans(obj.wto, ray.ori, nr.ori);
  	if (!((nr.ori[1] < 0 && nr.dir[1] > 0) || (nr.ori[1] > 0 && nr.dir[1] < 0)))
 		return (0);
 	normalise(nr.dir);
@@ -145,13 +145,13 @@ int		tracer(t_ray ray, t_raytrace *r, double n)
 			if (inter_sphere(ray, r->obj[x], &n))
 				col = x;
 		if (r->obj[x].type == CONE)
-			if (inter_cone(&ray, &r->obj[x], &n))
+			if (inter_cone(ray, r->obj[x], &n))
 				col = x;
 		if (r->obj[x].type == CYLINDER)
-			if (inter_cylinder(&ray, &r->obj[x], &n))
+			if (inter_cylinder(ray, r->obj[x], &n))
 				col = x;
 		if (r->obj[x].type == PLANE)
-			if (inter_plane(&ray, &r->obj[x], &n))
+			if (inter_plane(ray, r->obj[x], &n))
 				col = x;
 		x++;
 	}
@@ -183,18 +183,18 @@ void	trace(t_raytrace *r)
 	int		prev_per;
 	double	invWidth = 1 / ((double)r->w - 200);
 	double	invHeight = 1 / (double)r->h;
-	double	aspect_rat = (r->w - 200) / (double)(r->h);
-	double	angle = tan(M_PI * 0.5f * r->obj[0].fov / 180.f);
+	double	aspect_rat = (double)(r->w - 200) / (double)(r->h);
+	double	angle = tan(M_PI * 0.5f * CAM->fov / 180.f);
 	double	near;
 	t_ray	ray;
 	
-	new_image(r, 1, -200, 0);
+	new_image(r, SCREEN, -200, 0);
 	pos[0] = 0;
 	prev_per = -1;
-	ray.ori[0] = r->obj[0].ori[0];
-	ray.ori[1] = r->obj[0].ori[1];
-	ray.ori[2] = r->obj[0].ori[2];
-	calccam(&r->obj[0]);
+	ray.ori[0] = CAM->ori[0];
+	ray.ori[1] = CAM->ori[1];
+	ray.ori[2] = CAM->ori[2];
+	calccam(CAM);
 	while (pos[0] < r->w - 200)
 	{
 		pos[1] = 0;
@@ -205,7 +205,7 @@ void	trace(t_raytrace *r)
 			ray.dir[0] = (2 * (pos[0] + 0.5) * invWidth - 1) * angle * aspect_rat;
 			ray.dir[1] = (1 - 2 * ((pos[1] + 0.5f) * invHeight)) * angle;
 			ray.dir[2] = -1;
-			mult_vec(r->obj[0].otw, ray.dir, ray.dir);
+			mult_vec(CAM->otw, ray.dir, ray.dir);
 			normalise(ray.dir);
 			put_pixel(pos, SCREEN, r, tracer(ray, r, near));
 			pos[1]++;
@@ -213,4 +213,5 @@ void	trace(t_raytrace *r)
 		pos[0]++;
 	}
 	mlx_put_image_to_window(r->mlx, r->win, r->img[1], 200, 0);
+	mlx_destroy_image(r->mlx, r->img[SCREEN]);
 }
