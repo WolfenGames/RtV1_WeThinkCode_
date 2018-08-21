@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/17 11:39:47 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/21 06:52:09 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,31 +81,6 @@ int		inter_plane(t_ray *ray, t_obj *obj, double *n)
 	*n = a;
 	return (1);
 }
-
-/* int		inter_cylinder(t_ray ray, t_obj obj, double *n)
-{
-	t_vec	l;
-	double	a[3];
-	double	inter[2];
-	t_ray	nr;
-
-	mult_vec(obj.wto, ray.dir, nr.dir);
-	mult_trans(obj.wto, ray.ori, nr.ori);
-	minus_vec_vec(nr.ori, obj.ori, l);
-	a[0] = dot(nr.dir, nr.dir);
-	a[1] = 2 * dot(nr.dir, l);
-	a[2] = dot(l, l) - obj.radius2;
- 	if (!quad(a[0], a[1], a[2], inter))
-		return(0);
-	if (inter[0] < 0)
-		inter[0] = inter[1];
-	if (inter[0] < 0)
-		return(0);
-	if (inter[0] > *n)
-		return (0);
-	*n = inter[0];
-	return (1);
-} */
 
 int		inter_sphere(t_ray ray, t_obj obj, double *n)
 {
