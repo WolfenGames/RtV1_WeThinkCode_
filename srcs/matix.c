@@ -6,65 +6,82 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 11:26:05 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/21 06:33:41 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/21 14:59:31 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RTv1.h"
 
-void    fill_mat_rot_x(double mat[4][4], double ang)
+void    fill_mat_rot_x(double m[4][4], double th)
 {
-	ft_bzero(mat, sizeof(double) * 16);
-	mat[0][0] = 1;
-	mat[1][1] = cos(ang);
-	mat[1][2] = sin(ang);
-	mat[2][2] = mat[1][1];
-	mat[2][1] = -mat[1][2];
-	mat[3][3] = 1;
+	t_matrix a;
+
+	ft_bzero(a, sizeof(a));
+	m4_dup(a, m);
+	m[1][1] = cos(th);
+	m[1][2] = sin(th);
+	m[2][1] = -m[1][2];
+	m[2][2] = m[1][1];
+	m[0][0] = 1;
+	m[3][3] = 1;
 }
 
-void    fill_mat_rot_y(double mat[4][4], double ang)
+void    fill_mat_rot_y(double m[4][4], double th)
 {
-	ft_bzero(mat, sizeof(double) * 16);
-	mat[1][1] = 1;
-	mat[0][0] = cos(ang);
-	mat[2][0] = sin(ang);
-	mat[2][2] = mat[0][0];
-	mat[0][2] = -mat[2][0];
-	mat[3][3] = 1;
+	t_matrix a;
+
+	ft_bzero(a, sizeof(a));
+	m4_dup(a, m);
+	m[0][0] = cos(th);
+	m[0][2] = sin(th);
+	m[2][0] = -m[0][2];
+	m[2][2] = m[0][0];
+	m[1][1] = 1;
+	m[3][3] = 1;
 }
 
-void    fill_mat_rot_z(double mat[4][4], double ang)
+void    fill_mat_rot_z(double m[4][4], double th)
 {
-	ft_bzero(mat, sizeof(double) * 16);
-	mat[2][2] = 1;
-	mat[0][0] = cos(ang);
-	mat[1][0] = sin(ang);
-	mat[1][1] = mat[0][0];
-	mat[0][1] = -mat[1][0];
-	mat[3][3] = 1;
+	t_matrix a;
+
+	ft_bzero(a, sizeof(a));
+	m4_dup(a, m);
+	m[0][0] = cos(th);
+	m[1][0] = sin(th);
+	m[0][1] = -m[1][0];
+	m[1][1] = m[0][0];
+	m[2][2] = 1;
+	m[3][3] = 1;
 }
 
-void	fill_mat_trans(double mat[4][4], t_vec t)
+void	fill_mat_trans(t_matrix m, t_vec trans)
 {
-	ft_bzero(mat, sizeof(double) * 16);
-	mat[0][0] = 1;
-	mat[1][1] = 1;
-	mat[2][2] = 1;
-	mat[3][3] = 1;
-	mat[3][0] = t[0];
-	mat[3][1] = t[1];
-	mat[3][2] = t[2];
+	m[0][0] = 1;
+	m[0][1] = 0;
+	m[0][2] = 0;
+	m[1][1] = 1;
+	m[1][0] = 0;
+	m[1][2] = 0;
+	m[2][2] = 1;
+	m[2][1] = 0;
+	m[2][0] = 0;
+	m[0][3] = 0;
+	m[1][3] = 0;
+	m[2][3] = 0;
+	m[3][3] = 1;
+	m[3][0] = trans[0];
+	m[3][1] = trans[1];
+	m[3][2] = trans[2];
 }
 
 double  *mult_vec(double a[4][4], double v[3], double r[3])
 {
-	double  cpy[3];
+	t_vec temp;
 
-	cpy[0] = v[0] * a[0][0] + v[1] * a[0][1] + v[2] * a[0][2];
-	cpy[1] = v[0] * a[1][0] + v[1] * a[1][1] + v[2] * a[1][2];
-	cpy[2] = v[0] * a[2][0] + v[1] * a[2][1] + v[2] * a[2][2];
-	ft_memmove(r, cpy, 3 * sizeof(double));
+	temp[0] = v[0] * a[0][0] + v[1] * a[1][0] + v[2] * a[2][0];
+	temp[1] = v[0] * a[0][1] + v[1] * a[1][1] + v[2] * a[2][1];
+	temp[2] = v[0] * a[0][2] + v[1] * a[1][2] + v[2] * a[2][2];
+	ft_memmove(r, temp, 3 * sizeof(double));
 	return(r);
 }
 
@@ -72,9 +89,9 @@ double  *mult_trans(double a[4][4], double v[3], double r[3])
 {
 	double  cpy[3];
 
-	cpy[0] = v[0] * a[0][0] + v[1] * a[0][1] + v[2] * a[0][2] + a[0][3];
-	cpy[1] = v[0] * a[1][0] + v[1] * a[1][1] + v[2] * a[1][2] + a[1][3];
-	cpy[2] = v[0] * a[2][0] + v[1] * a[2][1] + v[2] * a[2][2] + a[2][3];
+	cpy[0] = v[0] * a[0][0] + v[1] * a[1][0] + v[2] * a[2][0] + a[3][0];
+	cpy[1] = v[0] * a[0][1] + v[1] * a[1][1] + v[2] * a[2][1] + a[3][1];
+	cpy[2] = v[0] * a[0][2] + v[1] * a[1][2] + v[2] * a[2][2] + a[3][2];
 	ft_memmove(r, cpy, 3 * sizeof(double));
 	return (r);
 }
@@ -91,8 +108,8 @@ void	mult_mat(double a[4][4], double b[4][4], double r[4][4])
 		y = 0;
 		while (y < 4)
 		{
-			cpy[x][y] = a[y][0] * b[0][x] + a[y][1] * b[1][x] + a[y][2] *
-						b[2][x] + a[y][3] * b[3][x];
+			cpy[x][y] =  a[x][0] * b[0][y] + a[x][1] * b[1][y] + a[x][2]
+				* b[2][y] + a[x][3] * b[3][y];
 			y++;
 		}
 		x++;
@@ -110,19 +127,23 @@ double	angle_find(t_vec a, t_vec b)
 	return (acos(r[1]/sqrt(r[0] * r[2])));
 }
 
-double	dot(t_vec a, t_vec b)
+double	dot2(t_vec a, t_vec b)
 {
 	return ((a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]));
 }
 
 void	normalise(t_vec v)
 {
-	double	nor2;
+	double l;
 
-	nor2 = 1 / sqrt((v[0] * v[0]) + (v[1] * v[1]) + (v[2] * v[2]));
-	v[0] *= nor2;
-	v[1] *= nor2;
-	v[2] *= nor2;
+	l = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	if (l > 0)
+	{
+		l = 1 / sqrt(l);
+		v[0] *= l;
+		v[1] *= l;
+		v[2] *= l;
+	}
 }
 
 double	vec_len(t_vec v)
@@ -227,7 +248,7 @@ double	determinate(double a[4][4], double size)
 	return (ret);
 }
 
-void		m4_dup(t_matrix src, t_matrix ret)
+void		m4_du2p(t_matrix src, t_matrix ret)
 {
 	int i;
 	int j;
@@ -269,7 +290,7 @@ static void	det_work(t_matrix a, t_matrix b, double size, int c)
 	}
 }
 
-double		determinant(t_matrix a, double size)
+double		d3eterminant(t_matrix a, double size)
 {
 	double		s;
 	double		ret;
@@ -340,20 +361,20 @@ void	inver(t_matrix src, t_matrix ret)
 
 void	calccam(t_obj *cam)
 {
-	double	a[4][4];
+	t_matrix a;
 	t_vec	b;
 
 	ft_bzero(cam->otw, sizeof(double) * 16);
 	ft_bzero(a, sizeof(double) * 16);
-	fill_mat_rot_x(cam->otw, cam->rot[1] * M_PI / 180.0);
-	fill_mat_rot_y(a, cam->rot[0] * M_PI / 180.0);
-	mult_mat(cam->otw, a, cam->otw);
+	fill_m_rot_x(cam->otw, cam->rot[1] * M_PI / 180.0);
+	fill_m_rot_y(a, cam->rot[0] * M_PI / 180.0);
+	m4_mult(cam->otw, a, cam->otw);
 	b[0] = 0;
 	b[1] = 0;
 	b[2] = -1;
-	mult_vec(cam->otw, b, b);
-	fill_rot_v(a, b, (cam->rot[2] * M_PI) / 180.0);
-	mult_mat(cam->otw, a, cam->otw);
+	transformvec(cam->otw, b, b);
+	fill_m_rot_v((cam->rot[2] * M_PI) / 180.0 ,b, a);
+	m4_mult(cam->otw, a, cam->otw);
 }
 
 void	obj_thingies(t_obj *o)
@@ -362,14 +383,14 @@ void	obj_thingies(t_obj *o)
 
 	ft_bzero(o->otw, sizeof(double) * 16);
 	ft_bzero(a, sizeof(double) * 16);
-	fill_mat_rot_y(o->otw, o->rot[0] * M_PI / 180.0);
-	fill_mat_rot_x(a, o->rot[1] * M_PI / 180.0);
+	fill_m_rot_y(o->otw, o->rot[0] * M_PI / 180.0);
+	fill_m_rot_x(a, o->rot[1] * M_PI / 180.0);
 	mult_mat(o->otw, a, o->otw);
-	fill_mat_rot_z(a, (o->rot[2] * M_PI) / 180.0);
+	fill_m_rot_z(a, (o->rot[2] * M_PI) / 180.0);
 	mult_mat(o->otw, a, o->otw);
-	fill_mat_trans(a, o->ori);
+	fill_m_transform(a, o->org);
 	mult_mat(o->otw, a, o->otw);
-	inver(o->otw, o->wto);
+	m4_invert(o->otw, o->wto);
 }
 
 double	*mult_vec_f(t_vec v, double a, t_vec r)
@@ -420,7 +441,7 @@ double	*minus_vec_vec(t_vec a, t_vec b, t_vec r)
 	return (r);
 }
 
-void	vec_dup(t_vec a, t_vec b)
+void	vec_dup2(t_vec a, t_vec b)
 {
 	b[0] = a[0];
 	b[1] = a[1];

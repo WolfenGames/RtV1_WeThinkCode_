@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/21 10:18:23 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/23 08:23:37 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 # define RTV1_H
 
 # include "../libft/includes/libft.h"
+# include "../Vectorlib/vectorlib.h"
 # include <mlx.h>
 # include <math.h>
 # include <stdio.h>
 
 # define MAX_RAY_DEPTH	5
-# define CAM 			find_obj("Camera", r)
+# define CAM 			r->obj[0]
 
 typedef double		d_mat;
 
-typedef double		t_vec[3];
+//typedef double		t_vec[3];
 typedef double		t_matrix[4][4];
 typedef enum		s_img
 {
@@ -33,7 +34,7 @@ typedef enum		s_img
 }					t_img;
 typedef enum		s_v
 {
-					ORI = 0,
+					org = 0,
 					ROT = 1,
 					SIZE = 2,
 					FOV = 3,
@@ -42,7 +43,7 @@ typedef enum		s_v
 }					t_v;
 typedef struct		s_ray
 {
-	t_vec			ori;
+	t_vec			org;
 	t_vec			dir;
 	double			len;
 }					t_ray;
@@ -66,7 +67,7 @@ typedef struct		s_obj
 	double			wto[4][4];
 	double			otw[4][4];
 	t_vec			rot;
-	t_vec			ori;
+	t_vec			org;
 	t_vec			norm;
 	t_vec			size;
 	t_type			type;
@@ -135,8 +136,9 @@ int					colour_grad(int col1, int col2, float r);
 char    			*get_obj_name(t_type i);
 char				ft_char_tolower(char c);
 char				ft_char_toupper(char c);
-int					inter_cylinder(t_ray ray, t_obj obj, double *n);
+int					inter_cylinder(t_ray *ray, t_obj *obj, double *n);
 int					inter_cone(t_ray ray, t_obj obj, double *near);
+int					inter_sphere(t_ray ray, t_obj obj, double *n);
 t_bool				quad(double a, double b, double c, double d[2]);
 
 #endif

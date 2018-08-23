@@ -1,0 +1,49 @@
+>Camera
+-Fov 90
+-origin 0,0,25
+-Rotation 0,-10,0
+>Wall-left
+-origin -6,0,0
+-Rotation 0,0,90
+-Color ff0000
+-Type plane
+>Wall-Right
+-origin 6,0,0
+-Rotation 0,0,90
+-Color f4415f
+-Type plane
+>Roof
+-origin 0,6,0
+-Rotation 0,0,0
+-Color 00ff00
+-Type plane
+>Floor
+-origin 0,-6,0
+-Rotation 0,0,0
+-Color 00ff00
+-Type plane
+>Back Wall
+-origin 0,0,-6
+-Rotation 0,90,0
+-Color 0000ff
+-Type plane
+>Ball
+-Origin 0,0,0
+-Rotation 0,0,0
+-Color f442dc
+-Radius 1
+-Type sphere
+>Pipe
+-origin 0,1.5,3
+-Rotation 0,145,0
+-Size 2,1,1
+-Radius 1
+-Type cylinder
+-Color 8640c4
+>Hat
+-origin 0,0,4
+-Rotation 0,145,0
+-Radius 1
+-Size 1,1,1
+-Type Cone
+-Color 49355b

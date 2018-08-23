@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 11:34:21 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/21 10:17:43 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/21 13:36:48 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,19 @@ static int	get_abc(double near, double t[3], t_ray *ray, t_obj *obj)
 	double	var[3];
 	double	c;
 
-	mult_vec(obj->wto, ray->dir, tempray.dir);
-	mult_trans(obj->wto, ray->ori, tempray.ori);
-	c = (obj->radius/obj->size[0]) * (obj->radius/obj->size[0]);
+	transformvec(obj->wto, ray->dir, tempray.dir);
+	//mult_vec(obj->wto, ray->dir, tempray.dir);
+	transform(obj->wto, ray->org, tempray.org);
+	//mult_trans(obj->wto, ray->org, tempray.org);
+	c = 4;//(obj->ratio) * (obj->ratio);
 	var[0] = tempray.dir[0] * tempray.dir[0] + tempray.dir[1] * tempray.dir[1]
 		- c * tempray.dir[2] * tempray.dir[2];
-	var[1] = 2 * (tempray.ori[0] * tempray.dir[0] + tempray.ori[1]
+	var[1] = 2 * (tempray.org[0] * tempray.dir[0] + tempray.org[1]
 		* tempray.dir[1]
-		- c * (tempray.ori[2] - obj->size[0] / 2) * tempray.dir[2]);
-	var[2] = tempray.ori[0] * tempray.ori[0] + tempray.ori[1] * tempray.ori[1]
-		- c * (tempray.ori[2] - obj->size[0] / 2)
-		* (tempray.ori[2] - obj->size[0] / 2);
+		- c * (tempray.org[2] - obj->size[0] / 2) * tempray.dir[2]);
+	var[2] = tempray.org[0] * tempray.org[0] + tempray.org[1] * tempray.org[1]
+		- c * (tempray.org[2] - obj->size[0] / 2)
+		* (tempray.org[2] - obj->size[0] / 2);
 	if (!quad(var[0], var[1], var[2], t))
 		return (0);
 	t[2] = t[0] < 0 ? t[1] : t[0];
@@ -64,19 +66,21 @@ static int	cone_bound(t_vec temp, t_obj *obj, double t[3], t_ray tempray)
 {
 	double c;
 
-	if (temp[2] < -obj->size[0] / 2 + obj->ori[2]
-		|| temp[2] > obj->size[0] / 2 + obj->ori[2])
+	if (temp[2] < -obj->size[0] / 2 + obj->org[2]
+		|| temp[2] > obj->size[0] / 2 + obj->org[2])
 	{
 		if (t[2] == t[1])
 			return (0);
 		t[2] = t[1];
-		mult_vec_f(tempray.dir, t[2], temp);
-		add_vec_vec(tempray.ori, temp, temp);
+		v_multi(tempray.dir, t[2], temp);
+		//mult_vec_f(tempray.dir, t[2], temp);
+		v_add(tempray.org, temp, temp);
+		//add_vec_vec(tempray.org, temp, temp);
 		c = atan2f(temp[1], temp[0]);
-		if (c < 0.f)
+		if (c < 0.0f)
 			c += 2.0f * M_PI;
-		if (temp[2] < -obj->size[0] / 2 + obj->ori[2]
-			|| temp[2] > obj->size[0] / 2 + obj->ori[2])
+		if (temp[2] < -obj->size[0] / 2 + obj->org[2]
+			|| temp[2] > obj->size[0] / 2 + obj->org[2])
 			return (0);
 	}
 	return (1);
@@ -91,10 +95,14 @@ int			inter_cone(t_ray ray, t_obj obj, double *near)
 
 	if (!get_abc(*near, t, &ray, &obj))
 		return (0);
-	mult_vec(obj.wto, ray.dir, tempray.dir);
-	mult_trans(obj.wto, ray.ori, tempray.ori);
-	mult_vec_f(tempray.dir, t[2], temp);
-	add_vec_vec(tempray.ori, temp, temp);
+	transformvec(obj.wto, ray.dir, tempray.dir);
+	//mult_vec(obj.wto, ray.dir, tempray.dir);
+	transform(obj.wto, ray.org, tempray.org);
+	//mult_trans(obj.wto, ray.org, tempray.org);
+	v_multi(tempray.dir, t[2], temp);
+	//mult_vec_f(tempray.dir, t[2], temp);
+	v_add(tempray.org, temp, temp);
+	//add_vec_vec(tempray.org, temp, temp);
 	c = atan2f(temp[1], temp[0]);
 	if (c < 0.0f)
 		c += 2.0f * M_PI;

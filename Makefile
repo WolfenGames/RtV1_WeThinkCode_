@@ -6,7 +6,7 @@
 #    By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/06 10:11:48 by jwolf             #+#    #+#              #
-#    Updated: 2018/08/20 10:49:32 by jwolf            ###   ########.fr        #
+#    Updated: 2018/08/21 13:24:38 by jwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OS   = $(shell uname)
 
 CFLAGS += -Wextra -Wall -I./includes
 
-ATTACH = -L libft/ -lft -lmlx -framework OpenGL -framework AppKit -O3
+ATTACH = -L libft/ -lft Vectorlib/Vectorlib.a -lmlx -framework OpenGL -framework AppKit -O3
 
 C = gcc
 
@@ -38,6 +38,7 @@ $(DIR_O)/%.o:		$(DIR_S)/%.c $(HEADERS)/$(NAME).h
 $(NAME): temporary $(OBJECTS)
 	@echo "\033[1;34;m[Making... Pizza]\033[0m"
 	@make -C libft
+	@make -C Vectorlib
 	$(C) $(CFLAGS) -o $(NAME) $(OBJECTS) $(ATTACH)
 
 all: temporary $(NAME)

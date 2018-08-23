@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 16:23:17 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/17 12:54:38 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/21 14:51:10 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	setprop(t_obj *obj, char *line)
  	 if (ft_strnequ(s, "fov", 3))
 		obj->fov = ft_atod(ft_strchr(line, ' ') + 1);
 	if (ft_strnequ(s, "origin", 6))
-		vec_assign(obj, ORI, ft_strchr(line, ' ') + 1);
+		vec_assign(obj, org, ft_strchr(line, ' ') + 1);
 	if (ft_strnequ(s, "rotation", 8))
 		vec_assign(obj, ROT, ft_strchr(line, ' ') + 1);
 	if (ft_strnequ(s, "size", 4))
