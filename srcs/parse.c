@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 16:23:17 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/21 14:51:10 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/23 13:26:32 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,10 @@ int		get_type(const char *s)
 		free(p);
 		return (CONE);
 	}
-	if (ft_strnequ(p, "light_spot", 11))
+	if (ft_strnequ(p, "light", 11))
 	{
 		free(p);
-		return (LIGHT_SPOT);
-	}
-	if (ft_strnequ(p, "light_dir", 10))
-	{
-		free(p);
-		return (LIGHT_DIR);
-	}
-	if (ft_strnequ(p, "light_cone", 11))
-	{
-		free(p);
-		return (LIGHT_CONE);
-	}
-	if (ft_strnequ(p, "light_point", 12))
-	{
-		free(p);
-		return (LIGHT_POINT);
+		return (LIGHT);
 	}
 	free(p);
 	return (NONE);
@@ -86,21 +71,9 @@ void	setprop(t_obj *obj, char *line)
 		obj->radius = ft_atod(ft_strchr(line, ' ') + 1);
 		obj->radius2 = obj->radius * obj->radius;
 	}
-	if (ft_strnequ(line, "Color", 5))
+	if (ft_strnequ(s, "color", 5))
 		obj->surface_col = get_col(ft_strchr(line, ' ') + 1);
 	free(s);
-}
-
-void	apply(t_raytrace *r)
-{
-	int		x;
-
-	x = 1;
-	while (x < r->objsize)
-	{
-		obj_thingies(&r->obj[x]);
-		x++;
-	}
 }
 
 void    load_file(int fd, t_raytrace *r)
@@ -121,5 +94,4 @@ void    load_file(int fd, t_raytrace *r)
 	}
 	if (line)
 		free(line);
-	apply(r);
 }

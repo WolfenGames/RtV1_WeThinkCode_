@@ -1,0 +1,13 @@
+>Camera
+-Origin 0,0,5
+-Rotation 0,0,0
+-FOV 80
+>Light
+-Origin 10,0,0
+>Ball
+-Origin 0,0,0
+-Rotation 0,0,0
+-Color 49355b
+-Size 1
+-Radius 1
+-Type sphere

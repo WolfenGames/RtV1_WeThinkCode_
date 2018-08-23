@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 07:50:52 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/16 11:38:29 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/23 12:39:24 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,8 @@ char    *get_obj_name(t_type i)
 		return ("Camera");
 	if (i == SPHERE)
 		return ("Sphere");
-	if (i == LIGHT_SPOT)
-		return ("Light Spot");
-	if (i == LIGHT_DIR)
-		return ("Light Directional");
-	if (i == LIGHT_CONE)
-		return ("Light Cone");
-	if (i == LIGHT_POINT)
-		return ("Light Point");
+	if (i == LIGHT)
+		return ("Light");
 	if (i == PLANE)
 		return ("Plane");
 	if (i == CONE)

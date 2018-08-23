@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 15:44:03 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/16 08:47:37 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/23 14:18:04 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void				ft_strclr(char *as);
 void				ft_strdel(char **as);
 void				ft_striter(char *s, void (*f)(char *));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
+void				ft_swap(void *a, void *b, size_t size);
 
 void				*ft_memalloc(size_t size);
 void				*ft_memcpy(void *str1, const void *str2, size_t n);

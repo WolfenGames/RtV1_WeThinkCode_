@@ -36,7 +36,7 @@
 >Pipe
 -origin 0,1.5,3
 -Rotation 0,145,0
--Size 2,1,1
+-Size 2
 -Radius 1
 -Type cylinder
 -Color 8640c4
@@ -44,6 +44,6 @@
 -origin 0,0,4
 -Rotation 0,145,0
 -Radius 1
--Size 1,1,1
+-Size 2
 -Type Cone
 -Color 49355b

@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 11:26:05 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/21 14:59:31 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/23 12:24:21 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ double	angle_find(t_vec a, t_vec b)
 	return (acos(r[1]/sqrt(r[0] * r[2])));
 }
 
-double	dot2(t_vec a, t_vec b)
+double	dot(t_vec a, t_vec b)
 {
 	return ((a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2]));
 }
@@ -248,7 +248,7 @@ double	determinate(double a[4][4], double size)
 	return (ret);
 }
 
-void		m4_du2p(t_matrix src, t_matrix ret)
+void		m4_dup(t_matrix src, t_matrix ret)
 {
 	int i;
 	int j;
@@ -290,7 +290,7 @@ static void	det_work(t_matrix a, t_matrix b, double size, int c)
 	}
 }
 
-double		d3eterminant(t_matrix a, double size)
+double		determinant(t_matrix a, double size)
 {
 	double		s;
 	double		ret;
@@ -365,16 +365,16 @@ void	calccam(t_obj *cam)
 	t_vec	b;
 
 	ft_bzero(cam->otw, sizeof(double) * 16);
-	ft_bzero(a, sizeof(double) * 16);
-	fill_m_rot_x(cam->otw, cam->rot[1] * M_PI / 180.0);
-	fill_m_rot_y(a, cam->rot[0] * M_PI / 180.0);
-	m4_mult(cam->otw, a, cam->otw);
+    ft_bzero(a, sizeof(double) * 16);
+	fill_mat_rot_x(cam->otw, cam->rot[1] * M_PI / 180.0);
+	fill_mat_rot_y(a, cam->rot[0] * M_PI / 180.0);
+	mult_mat(cam->otw, a, cam->otw);
 	b[0] = 0;
 	b[1] = 0;
 	b[2] = -1;
-	transformvec(cam->otw, b, b);
-	fill_m_rot_v((cam->rot[2] * M_PI) / 180.0 ,b, a);
-	m4_mult(cam->otw, a, cam->otw);
+	mult_vec(cam->otw, b, b);
+	fill_rot_v(a, b, (cam->rot[2] * M_PI) / 180.0);
+	mult_mat(cam->otw, a, cam->otw);
 }
 
 void	obj_thingies(t_obj *o)
@@ -383,14 +383,14 @@ void	obj_thingies(t_obj *o)
 
 	ft_bzero(o->otw, sizeof(double) * 16);
 	ft_bzero(a, sizeof(double) * 16);
-	fill_m_rot_y(o->otw, o->rot[0] * M_PI / 180.0);
-	fill_m_rot_x(a, o->rot[1] * M_PI / 180.0);
+	fill_mat_rot_y(o->otw, o->rot[0] * M_PI / 180.0);
+	fill_mat_rot_x(a, o->rot[1] * M_PI / 180.0);
 	mult_mat(o->otw, a, o->otw);
-	fill_m_rot_z(a, (o->rot[2] * M_PI) / 180.0);
+	fill_mat_rot_z(a, (o->rot[2] * M_PI) / 180.0);
 	mult_mat(o->otw, a, o->otw);
-	fill_m_transform(a, o->org);
+	fill_mat_trans(a, o->org);
 	mult_mat(o->otw, a, o->otw);
-	m4_invert(o->otw, o->wto);
+	inver(o->otw, o->wto);
 }
 
 double	*mult_vec_f(t_vec v, double a, t_vec r)
@@ -441,11 +441,11 @@ double	*minus_vec_vec(t_vec a, t_vec b, t_vec r)
 	return (r);
 }
 
-void	vec_dup2(t_vec a, t_vec b)
+void	vec_dup(t_vec s, t_vec d)
 {
-	b[0] = a[0];
-	b[1] = a[1];
-	b[2] = a[2];
+	d[0] = s[0];
+	d[1] = s[1];
+	d[2] = s[2];
 }
 
 void	vec_swap(t_vec a, t_vec b)

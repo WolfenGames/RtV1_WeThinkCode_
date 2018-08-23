@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/23 08:26:12 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/23 15:57:13 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	info(t_raytrace *r)
 {
 	double	pos[2];
-	
-	new_image(r, 2, 0, 800);
+
+	new_image(r, 2, -800, 800);
 	pos[0] = 0;
 	while (pos[0] < 200)
 	{
@@ -30,143 +30,23 @@ void	info(t_raytrace *r)
 	}
 	mlx_put_image_to_window(r->mlx, r->win, r->img[2], 0, 700);
 	mlx_string_put(r->mlx, r->win, 10, 710, 0X18545E,
-					"RTv1");
+			"RTv1");
 	mlx_string_put(r->mlx, r->win, 10, 740, 0X18545E,
-					"jwolf");
+			"jwolf");
 	mlx_string_put(r->mlx, r->win, 10, 770, 0X18545E,
-					"WeThinkCode_");
-}
-
-t_bool	quad(double a, double b, double c, double d[2])
-{
-	double	e;
-	double	hold;
-
-	e = b * b - 4.0f * a * c;
-	if (e < 0)
-		return (FALSE);
-	if (e == 0)
-	{
-		d[1] = -0.5f * b / a;
-		d[0] = d[1];
-	}
-	else
-	{
-		hold = (b > 0) ? (-0.5f * b + sqrt(e)) : (-0.5f * b - sqrt(e));
-		d[0] = hold / a;
-		d[1] = c / hold;
-	}
-	if (d[0] > d[1])
-	{
-		hold = d[0];
-		d[0] = d[1];
-		d[1] = hold;
-	}
-	return (TRUE);
-}
-
-int		inter_plane(t_ray ray, t_obj obj, double *n)
-{
-	t_ray	nr;
-	double	a;
-
-	mult_vec(obj.wto, ray.dir, nr.dir);
-	mult_trans(obj.wto, ray.org, nr.org);
- 	if (!((nr.org[1] < 0 && nr.dir[1] > 0) || (nr.org[1] > 0 && nr.dir[1] < 0)))
-		return (0);
-	normalise(nr.dir);
-	a = ABS(nr.org[1] / (nr.dir[1] - 0.0001));
-	if (a > *n)
-		return (0);
-	*n = a;
-	return (1);
-}
-
-/* int		inter_cylinder(t_ray ray, t_obj obj, double *n)
-{
-	t_vec	l;
-	double	a[3];
-	double	inter[2];
-	t_ray	nr;
-
-	mult_vec(obj.wto, ray.dir, nr.dir);
-	mult_trans(obj.wto, ray.org, nr.org);
-	minus_vec_vec(nr.org, obj.org, l);
-	a[0] = dot(nr.dir, nr.dir);
-	a[1] = 2 * dot(nr.dir, l);
-	a[2] = dot(l, l) - obj.radius2;
- 	if (!quad(a[0], a[1], a[2], inter))
-		return(0);
-	if (inter[0] < 0)
-		inter[0] = inter[1];
-	if (inter[0] < 0)
-		return(0);
-	if (inter[0] > *n)
-		return (0);
-	*n = inter[0];
-	return (1);
-} */
-
-int		inter_sphere(t_ray ray, t_obj obj, double *n)
-{
-	double	a[3];
-	double	inter[2];
-	t_ray	nr;
-
-	mult_vec(obj.wto, ray.dir, nr.dir);
-	mult_trans(obj.wto, ray.org, nr.org);
-	//minus_vec_vec(nr.org, obj.org, l);
-	a[0] = dot(nr.dir, nr.dir);
-	a[1] = 2 * dot(nr.dir, nr.org);
-	a[2] = dot(nr.org, nr.org) - obj.radius2;
- 	if (!quad(a[0], a[1], a[2], inter))
-		return(0);
-	if (inter[0] < 0)
-		inter[0] = inter[1];
-	if (inter[0] < 0)
-		return(0);
-	if (inter[0] > *n)
-		return (0);
-	*n = inter[0];
-	return (1);
-}
-
-int		tracer(t_ray ray, t_raytrace *r, double n)
-{
-	int		x;
-	int		col;
-
-	x = 1;
-	col = -1;
-	while (x < r->objsize)
-	{
-		if (r->obj[x].type == SPHERE)
-			if (inter_sphere(ray, r->obj[x], &n))
-				col = x;
-		if (r->obj[x].type == CONE)
-			if (inter_cone(ray, r->obj[x], &n))
-				col = x;
-		if (r->obj[x].type == CYLINDER)
-			if (inter_cylinder(&ray, &r->obj[x], &n))
-				col = x;
-		if (r->obj[x].type == PLANE)
-			if (inter_plane(ray, r->obj[x], &n))
-				col = x;
-		x++;
-	}
-	return (col < 0 ? (0) : r->obj[col].surface_col);
+			"WeThinkCode_");
 }
 
 void	back(t_raytrace *r)
 {
 	double	pos[2];
-	
-	new_image(r, 0, 0, 0);
+
+	new_image(r, 0, -800, 0);
 	pos[0] = 0;
-	while (pos[0] < r->w)
+	while (pos[0] < 200)
 	{
 		pos[1] = 0;
-		while (pos[1] < r->h)
+		while (pos[1] < 700)
 		{
 			put_pixel(pos, 0, r, 0XF2EFAA);
 			pos[1] += .1f;
@@ -176,10 +56,106 @@ void	back(t_raytrace *r)
 	mlx_put_image_to_window(r->mlx, r->win, r->img[0], 0, 0);
 }
 
-void    trace_stuff(t_ray ray, double invVal, double ang, t_raytrace *r)
+int		quad(t_vec co, double t[2])
+{
+	double discr;
+	double q;
+
+	discr = co[1] * co[1] - 4.f * co[0] * co[2];
+	if (discr < 0)
+		return (0);
+	else if (discr == 0)
+	{
+		t[1] = -0.5 * co[1] / co[0];
+		t[0] = t[1];
+	}
+	else
+	{
+		q = (co[1] > 0) ? -0.5 * (co[1] + sqrt(discr)) : -0.5 * (co[1] - sqrt(discr));
+		t[0] = q / co[0];
+		t[1] = co[2] / q;
+	}
+	if (t[0] > t[1])
+		ft_swap(&t[0], &t[1], sizeof(double));
+	return (1);
+}
+
+int		inter_sphere(t_ray *ray, t_obj *obj, double *n)
+{
+	t_vec	l;
+	t_vec	v;
+	double	t[2];
+
+	minus_vec_vec(ray->org, obj->org, l);
+	v[0] = dot(ray->dir, ray->dir);
+	v[1] = 2 * dot(l, ray->dir);
+	v[2] = dot(l, l) - obj->radius2;
+	if (!quad(v, t))
+		return (0);
+	if (t[0] < 0)
+		t[0] = t[1];
+	if (t[0] < 0)
+		return (0);
+	if (t[0] > *n)
+		return (0);
+	*n = t[0];
+	return (1);
+}
+
+int     obj_index(t_raytrace *r, t_ray *ray, double *n)
+{
+	int     x;
+	int		col;
+
+	col = -1;
+	x = 2;
+	while (x < r->objsize)
+	{
+		if (r->obj[x].type == SPHERE)
+			if (inter_sphere(ray, &r->obj[x], n))
+				col = x;
+		x++;
+	}
+	return (col);
+}
+
+int		do_da_ray(double pos[], t_raytrace *r)
+{
+	t_ray	ray;
+	double	inv;
+	double	ang;
+	double	n;
+	t_vec   norm;
+	int		objindex;
+
+	inv = 1 / 800.f;
+	n = INFINITY;
+	ang = tan(CAMFOV * 0.5f * M_PI / 180.0);
+	ray.dir[0] = (2 * (pos[0] + 0.5f) * inv - 1) * ang;
+	ray.dir[1] = (1 - 2 * (pos[1] + 0.5f) * inv) * ang;
+	ray.dir[2] = -1;
+	vec_dup(CAM.org, ray.org);
+	normalise(ray.dir);
+	if ((objindex = obj_index(r, &ray, &n)) == -1)
+		return (0);
+	mult_vec_f(ray.dir, n, ray.dir);
+	add_vec_vec(ray.dir, ray.org, ray.org);
+	minus_vec_vec(ray.org, r->obj[objindex].org, norm);
+	normalise(norm);
+	add_vec_vec(ray.org, mult_vec_f(norm, 0.0001, norm), ray.org);
+	minus_vec_vec(r->obj[1].org, ray.org, ray.dir);
+	n = vec_len(ray.dir);
+	normalise(ray.dir);
+	if (obj_index(r, &ray, &n) != -1)
+		return (scale_colour(r->obj[objindex].surface_col, 0.07));
+	minus_vec_vec(ray.org, r->obj[objindex].org, norm);
+	normalise(norm);
+	return (colour_grad(scale_colour(r->obj[objindex].surface_col, dot(norm, ray.dir)), r->obj[objindex].surface_col, 0.07));
+}
+
+void	tracer(t_raytrace *r)
 {
 	double	pos[2];
-	double	near;
 
 	pos[0] = 0;
 	while (pos[0] < 800)
@@ -187,13 +163,8 @@ void    trace_stuff(t_ray ray, double invVal, double ang, t_raytrace *r)
 		pos[1] = 0;
 		while (pos[1] < 800)
 		{
-			near = INFINITY;
-			ray.dir[0] = (2 * (pos[0] + 0.5f) * invVal - 1) * ang;
-			ray.dir[1] = (1 - 2 * ((pos[1] + 0.5f) * invVal)) * ang;
-			ray.dir[2] = -1;
-			transformvec(CAM.otw, ray.dir, ray.dir);
-			normalise(ray.dir);
-			put_pixel(pos, SCREEN, r, tracer(ray, r, near));
+			put_pixel(pos, SCREEN, r, 
+					do_da_ray(pos, r));
 			pos[1]++;
 		}
 		pos[0]++;
@@ -202,16 +173,8 @@ void    trace_stuff(t_ray ray, double invVal, double ang, t_raytrace *r)
 
 void	trace(t_raytrace *r)
 {
-	double	invVal;
-	double	angle;
-	t_ray	ray;
-	
 	new_image(r, SCREEN, -200, 0);
-	ft_memcpy(ray.org, CAM.org, 3 * sizeof(double));
-	calccam(&CAM);
-	invVal = 1 / ((double)800);
-	angle = tan(M_PI * 0.5f * CAM.fov / 180.f);
-	trace_stuff(ray, invVal, angle, r);
+	tracer(r);
 	mlx_put_image_to_window(r->mlx, r->win, r->img[SCREEN], 200, 0);
 	mlx_destroy_image(r->mlx, r->img[SCREEN]);
 }

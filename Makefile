@@ -6,7 +6,7 @@
 #    By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/06 10:11:48 by jwolf             #+#    #+#              #
-#    Updated: 2018/08/21 13:24:38 by jwolf            ###   ########.fr        #
+#    Updated: 2018/08/23 14:58:08 by jwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OS   = $(shell uname)
 
 CFLAGS += -Wextra -Wall -I./includes
 
-ATTACH = -L libft/ -lft Vectorlib/Vectorlib.a -lmlx -framework OpenGL -framework AppKit -O3
+ATTACH = -L libft/ -lft -lmlx -framework OpenGL -framework AppKit -OFast
 
 C = gcc
 
@@ -27,7 +27,7 @@ DIR_S = srcs
 DIR_O = obj
 
 SOURCES = main.c draw.c trace.c matix.c parse.c objectstuff.c vecs.c color.c \
-			extra.c cylinder.c cone.c
+			extra.c
 
 OBJECTS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
@@ -38,7 +38,6 @@ $(DIR_O)/%.o:		$(DIR_S)/%.c $(HEADERS)/$(NAME).h
 $(NAME): temporary $(OBJECTS)
 	@echo "\033[1;34;m[Making... Pizza]\033[0m"
 	@make -C libft
-	@make -C Vectorlib
 	$(C) $(CFLAGS) -o $(NAME) $(OBJECTS) $(ATTACH)
 
 all: temporary $(NAME)
@@ -61,6 +60,6 @@ re: fclean clean all
 	@echo "\033[1;31;m[Recompiled]\033[0m"
 
 run: $(NAME)
-	./$(NAME) > out
+	./$(NAME) scene/ex.rtv1 > out
 
 .PHONY: fclean clean all re
