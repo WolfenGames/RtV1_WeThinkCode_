@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/23 16:00:53 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 06:58:05 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define MAX_RAY_DEPTH	5
 # define CAM			r->obj[0]
 # define CAMFOV			r->obj[0].fov
+# define LSO			r->obj[1].org
 
 typedef double		d_mat;
 
@@ -73,7 +74,6 @@ typedef struct		s_obj
 	double			fov;
 	unsigned int	surface_col;
 	t_vec           point;
-	t_vec           norm;
 }					t_obj;
 typedef struct		s_raytrace
 {

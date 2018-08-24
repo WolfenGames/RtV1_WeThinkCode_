@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/23 15:57:13 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 06:57:23 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int		do_da_ray(double pos[], t_raytrace *r)
 	minus_vec_vec(ray.org, r->obj[objindex].org, norm);
 	normalise(norm);
 	add_vec_vec(ray.org, mult_vec_f(norm, 0.0001, norm), ray.org);
-	minus_vec_vec(r->obj[1].org, ray.org, ray.dir);
+	minus_vec_vec(LSO, ray.org, ray.dir);
 	n = vec_len(ray.dir);
 	normalise(ray.dir);
 	if (obj_index(r, &ray, &n) != -1)
