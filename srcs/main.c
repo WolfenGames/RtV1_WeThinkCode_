@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:18:45 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 09:49:24 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 12:09:16 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,17 @@ int		keys(int key, t_raytrace *r)
 
 int     update(t_raytrace *r)
 {
-    t_matrix    m;
+	int		x;
 
-    fill_mat_rot_z(m, 20 * M_PI / 180.0f);
-    mult_trans(m, LSO, LSO);
-    fill_mat_rot_x(m, 5 * M_PI / 180.0f);
-    mult_trans(m, LSO, LSO);
+	x = 2;
+	while (x < r->objsize)
+	{
+		r->obj[x].rot[0] += 5;
+		r->obj[x].rot[1] += 10;
+		r->obj[x].rot[2] += 15;
+		x++;
+	}
+	apply(r);
     trace(r);
     return (0);
 }
@@ -43,10 +48,10 @@ void	set_hooks(t_raytrace *r)
 {
 	mlx_hook(r->win, 2, 0, keys, r);
 	mlx_hook(r->win, 17, 0, butt, r);
-//    mlx_loop_hook(r->mlx, update, r);
+    mlx_loop_hook(r->mlx, update, r);
 	back(r);
 	info(r);
-	trace(r);
+//	trace(r);
 	debug_text(r);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 07:39:38 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 10:03:21 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 12:51:30 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int		scale_colour(int col1, double r)
 	double	b_col1[3];
 	int		ret;
 
-	printf("%lf\n", r);
 	b_col1[0] = (col1 & 0xff0000) / 0x10000;
 	b_col1[1] = (col1 & 0xff00) / 0x100;
 	b_col1[2] = (col1 & 0xff);

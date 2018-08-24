@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 10:22:29 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 12:56:05 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ int     obj_index(t_raytrace *r, t_ray *ray, double *n)
 		if (r->obj[x].type == PLANE)
 			if (inter_plane(ray, &r->obj[x], n))
 				col = x;
+		if (r->obj[x].type == CONE)
+			if (inter_cone(ray, &r->obj[x], n))
+				col = x;
+		if (r->obj[x].type == CYLINDER)
+			if (inter_cylinder(ray, &r->obj[x], n))
+				col = x;
 		x++;
 	}
 	return (col);
@@ -89,7 +95,6 @@ int		lightstuff(t_obj *o, t_raytrace *r)
 	add_vec_vec(ray.org, mult_vec_f(o->norm, 0.000000001, tmp), ray.org);
 	if (obj_index(r, &ray, &n) != -1)
 		return (scale_colour(o->surface_col, 0.07));
-    printf("%lf %lf %lf\n", o->norm[0], o->norm[1], o->norm[2]);
 	return (maxd(scale_colour((colour_grad(scale_colour(o->surface_col, mind(dot(o->norm, ray.dir), 1.0)),
 		o->surface_col, 0.07)), mind(LI / n, 1.0)), scale_colour(o->surface_col, 0.07)));
 }

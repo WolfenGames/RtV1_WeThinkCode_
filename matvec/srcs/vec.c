@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 08:15:35 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 10:05:20 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 12:56:47 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,12 @@ double	mind(double a, double b)
 {
 	if (a > b)
 		return (b);
-	else
-		return (a);
+	return (a);
 }
 
 double	maxd(double a, double b)
 {
 	if (a < b)
 		return (b);
-	else
-		return (a);
+	return (a);
 }

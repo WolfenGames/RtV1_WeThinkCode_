@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 10:20:36 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 12:05:05 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void				obj_thingies(t_obj *o);
 
 int					inter_sphere(t_ray *ray, t_obj *obj, double *n);
 int					inter_plane(t_ray *ray, t_obj *obj, double *n);
+int					inter_cone(t_ray *ray, t_obj *obj, double *near);
+int					inter_cylinder(t_ray *ray, t_obj *obj, double *near);
 void				apply(t_raytrace *r);
 int					get_col(char *line);
 int					colour_grad(int col1, int col2, float r);
