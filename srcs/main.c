@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:18:45 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 12:09:16 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 13:06:29 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	set_hooks(t_raytrace *r)
 {
 	mlx_hook(r->win, 2, 0, keys, r);
 	mlx_hook(r->win, 17, 0, butt, r);
-    mlx_loop_hook(r->mlx, update, r);
+//    mlx_loop_hook(r->mlx, update, r);
 	back(r);
 	info(r);
-//	trace(r);
+	trace(r);
 	debug_text(r);
 }
 

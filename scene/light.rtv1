@@ -1,7 +1,7 @@
 >Camera
 -Origin 0,0,5
 -Rotation 0,0,0
--FOV 80
+-FOV 
 >Light
 -Origin 10,0,0
 >Ball

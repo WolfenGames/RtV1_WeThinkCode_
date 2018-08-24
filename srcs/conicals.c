@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 10:33:57 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 13:02:05 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 13:13:08 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ static int	cone_bound(t_vec temp, t_obj *obj, double t[3], t_ray tempray)
 {
 	double c;
 
-	if (temp[2] < -obj->size[0] / 2 + obj->org[2]
-		|| temp[2] > obj->size[0] / 2 + obj->org[2])
+	if (temp[2] < -obj->size[0] / 2
+		|| temp[2] > obj->size[0] / 2)
 	{
 		if (t[2] == t[1])
 			return (0);
@@ -89,8 +89,8 @@ static int	cone_bound(t_vec temp, t_obj *obj, double t[3], t_ray tempray)
 		c = atan2f(temp[1], temp[0]);
 		if (c < 0.0f)
 			c += 2.0f * M_PI;
-		if (temp[2] < -obj->size[0] / 2 + obj->org[2]
-			|| temp[2] > obj->size[0] / 2 + obj->org[2])
+		if (temp[2] < -obj->size[0] / 2
+			|| temp[2] > obj->size[0] / 2)
 			return (0);
 	}
 	return (1);
