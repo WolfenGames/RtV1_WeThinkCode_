@@ -6,11 +6,11 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:18:45 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/23 15:59:17 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 09:49:24 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 int		butt(int b, t_raytrace *r)
 {
@@ -32,9 +32,9 @@ int     update(t_raytrace *r)
     t_matrix    m;
 
     fill_mat_rot_z(m, 20 * M_PI / 180.0f);
-    mult_trans(m, r->obj[1].org, r->obj[1].org);
+    mult_trans(m, LSO, LSO);
     fill_mat_rot_x(m, 5 * M_PI / 180.0f);
-    mult_trans(m, r->obj[1].org, r->obj[1].org);
+    mult_trans(m, LSO, LSO);
     trace(r);
     return (0);
 }
@@ -43,9 +43,10 @@ void	set_hooks(t_raytrace *r)
 {
 	mlx_hook(r->win, 2, 0, keys, r);
 	mlx_hook(r->win, 17, 0, butt, r);
-    mlx_loop_hook(r->mlx, update, r);
+//    mlx_loop_hook(r->mlx, update, r);
 	back(r);
 	info(r);
+	trace(r);
 	debug_text(r);
 }
 

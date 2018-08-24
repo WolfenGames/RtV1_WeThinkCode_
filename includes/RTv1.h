@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RTv1.h                                             :+:      :+:    :+:   */
+/*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 06:58:05 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 10:20:36 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RTV1_H
 
 # include "../libft/includes/libft.h"
+# include "../matvec/includes/matvec.h"
 # include <mlx.h>
 # include <math.h>
 # include <stdio.h>
@@ -22,42 +23,46 @@
 # define CAM			r->obj[0]
 # define CAMFOV			r->obj[0].fov
 # define LSO			r->obj[1].org
-
-typedef double		d_mat;
+# define LI				r->obj[1].intensity
 
 typedef double		t_vec[3];
 typedef double		t_matrix[4][4];
-typedef enum		s_img
+typedef enum		e_img
 {
-					SIDE_BAR = 0,
-					SCREEN = 1,
-					LOGO = 2
+	SIDE_BAR = 0,
+	SCREEN = 1,
+	LOGO = 2
 }					t_img;
-typedef enum		s_v
+typedef enum		e_v
 {
-					org = 0,
-					ROT = 1,
-					SIZE = 2,
-					FOV = 3,
-					COL = 4,
-					RADIUS = 5
+	org = 0,
+	ROT = 1,
+	SIZE = 2,
+	FOV = 3,
+	COL = 4,
+	RADIUS = 5
 }					t_v;
+typedef enum		e_ray_type
+{
+	INCEDENT = 1,
+	SHADOW = 2
+}					t_ray_type;
 typedef struct		s_ray
 {
 	t_vec			org;
 	t_vec			dir;
 	double			len;
 }					t_ray;
-typedef	enum		s_type
+typedef	enum		e_type
 {
-					NONE = 0,
-					CAMERA = 1,
-					EYE = 2,
-					SPHERE = 3,
-					PLANE = 4,
-					CONE = 5,
-					CYLINDER = 6,
-					LIGHT = 7
+	NONE = 0,
+	CAMERA = 1,
+	EYE = 2,
+	SPHERE = 3,
+	PLANE = 4,
+	CONE = 5,
+	CYLINDER = 6,
+	LIGHT = 7
 }					t_type;
 typedef struct		s_obj
 {
@@ -73,7 +78,8 @@ typedef struct		s_obj
 	double			radius2;
 	double			fov;
 	unsigned int	surface_col;
-	t_vec           point;
+	t_vec			point;
+	double			intensity;
 }					t_obj;
 typedef struct		s_raytrace
 {
@@ -95,42 +101,18 @@ void				debug_text(t_raytrace *r);
 void				info(t_raytrace *r);
 void				trace(t_raytrace *r);
 void				back(t_raytrace *r);
-void				normalise(t_vec v);
-void				fill_mat_rot_x(double mat[4][4], double ang);
-void				fill_mat_rot_y(double mat[4][4], double ang);
-void				fill_mat_rot_z(double mat[4][4], double ang);
-void				fill_rot_v(double a[4][4], t_vec b, double ang);
-void				calco(double a[4][4], double b[4][4], double size, int t[2]);
-void				calccam(t_obj *cam);
-void				inver(t_matrix src, t_matrix ret);
-void				cofactor(double a[4][4], double size);
-void				mult_mat(double a[4][4], double b[4][4], double r[4][4]);
+
 void				load_file(int fd, t_raytrace *r);
 void				vec_assign(t_obj *o, t_v v, char *s);
 t_obj				*find_obj(char *name, t_raytrace *r);
+int					scale_colour(int col1, double r);
 
-double				vec_len(t_vec v);
-double				dot(t_vec a, t_vec b);
-double				determinate(double a[4][4], double size);
-double				maxd(double a, double b);
-double				*mult_vec(double a[4][4], double v[3], double r[3]);
-double				*mult_trans(double a[4][4], double v[3], double r[3]);
-double				angle_find(t_vec a, t_vec b);
-
-double				*mult_vec_f(t_vec v, double a, t_vec r);
-double				*mult_vec_vec(t_vec a, t_vec b, t_vec r);
-double				*add_vec_vec(t_vec a, t_vec b, t_vec r);
-double				*add_vec(t_vec v, double a, t_vec r);
-double				*minus_vec(t_vec v, double a, t_vec r);
-double				*minus_vec_vec(t_vec a, t_vec b, t_vec r);
-void				vec_dup(t_vec a, t_vec b);
-void				vec_swap(t_vec a, t_vec b);
+void				calccam(t_obj *cam);
 void				obj_thingies(t_obj *o);
-double				*vec_flip(t_vec v, t_vec r);
-double				maxd(double a, double b);
-void				m4_dup(t_matrix src, t_matrix ret);
-int		            scale_colour(int col1, double r);
 
+int					inter_sphere(t_ray *ray, t_obj *obj, double *n);
+int					inter_plane(t_ray *ray, t_obj *obj, double *n);
+void				apply(t_raytrace *r);
 int					get_col(char *line);
 int					colour_grad(int col1, int col2, float r);
 char				*get_obj_name(t_type i);

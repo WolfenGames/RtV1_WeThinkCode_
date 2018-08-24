@@ -6,11 +6,11 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:16:29 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/23 08:26:02 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 09:10:51 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 void    new_image(t_raytrace *r, int n, int deltax, int deltay)
 {

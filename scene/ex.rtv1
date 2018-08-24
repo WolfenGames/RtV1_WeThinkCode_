@@ -1,21 +1,27 @@
 >Camera
 -Fov 80
--origin 0,0,65
+-origin 0,0,5
 -Rotation 0,0,0
 >Light
--Origin 40,0,0
+-Origin 0,10,0
 -Rotation 0,0,0
+-Intensity 2
 >Hat
--origin -11,0,0
+-origin 0,0,0
 -Rotation 0,145,0
--Radius 10
+-Radius 1
 -Size 1,1,1
 -Type Sphere
 -Color ff00000
 >Hat2
--origin 11,0,0
+-origin 2,0,2
 -Rotation 0,145,0
--Radius 10
+-Radius 1
 -Size 1,1,1
 -Type Sphere
 -Color ff00000
+>Plane
+-origin 0,-3,0
+-Rotation 0,90,0
+-Color 00FFFF
+-Type Plane

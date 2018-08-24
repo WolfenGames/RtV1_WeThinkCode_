@@ -6,11 +6,11 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 07:38:09 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/21 14:07:31 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 09:11:38 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 #include "string.h"
 
 void    vec_assign(t_obj *o, t_v v, char *s)

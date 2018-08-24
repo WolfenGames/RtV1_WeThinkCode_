@@ -6,11 +6,11 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 16:23:17 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/23 13:26:32 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/24 10:20:48 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 int		get_type(const char *s)
 {
@@ -73,6 +73,8 @@ void	setprop(t_obj *obj, char *line)
 	}
 	if (ft_strnequ(s, "color", 5))
 		obj->surface_col = get_col(ft_strchr(line, ' ') + 1);
+	if (ft_strnequ(s, "intensity", 8))
+		obj->intensity = ft_atod(ft_strchr(line, ' ') + 1);
 	free(s);
 }
 
@@ -94,4 +96,5 @@ void    load_file(int fd, t_raytrace *r)
 	}
 	if (line)
 		free(line);
+	apply(r);
 }

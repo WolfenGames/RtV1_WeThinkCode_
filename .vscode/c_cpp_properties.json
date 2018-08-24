@@ -4,7 +4,9 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/includes"
+                "${workspaceFolder}/includes",
+                "${workspaceFolder}/matvec/**",
+                "${workspaceFolder}/matvec/includes"
             ],
             "defines": [],
             "macFrameworkPath": [
