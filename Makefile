@@ -6,7 +6,7 @@
 #    By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/06 10:11:48 by jwolf             #+#    #+#              #
-#    Updated: 2018/08/24 12:05:33 by jwolf            ###   ########.fr        #
+#    Updated: 2018/08/27 06:56:04 by jwolf            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ DIR_S = srcs
 DIR_O = obj
 
 SOURCES = main.c draw.c trace.c parse.c objectstuff.c vecs.c color.c \
-			extra.c sphericals.c planeicals.c conicals.c cylandricals.c
+			extra.c sphericals.c planeicals.c conicals.c cylandricals.c \
+			keys.c light.c error.c
 
 OBJECTS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 

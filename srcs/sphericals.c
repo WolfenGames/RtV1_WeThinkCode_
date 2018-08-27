@@ -6,13 +6,13 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 09:04:42 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 09:56:43 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 06:31:36 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-static void sphere_norm(t_ray *ray, t_obj *obj, double n)
+static void	sphere_norm(t_ray *ray, t_obj *obj, double n)
 {
 	t_ray	r;
 
@@ -23,7 +23,7 @@ static void sphere_norm(t_ray *ray, t_obj *obj, double n)
 	normalise(obj->norm);
 }
 
-int		    inter_sphere(t_ray *ray, t_obj *obj, double *n)
+int			inter_sphere(t_ray *ray, t_obj *obj, double *n)
 {
 	t_vec	l;
 	t_vec	v;

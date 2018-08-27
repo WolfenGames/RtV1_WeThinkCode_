@@ -6,13 +6,13 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 08:18:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 08:32:12 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 06:39:42 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/matvec.h"
 
-void	calco(double a[4][4], double b[4][4], double size, int dim[2])
+void		calco(double a[4][4], double b[4][4], double size, int dim[2])
 {
 	int		i[4];
 
@@ -87,7 +87,6 @@ double		determinant(t_matrix a, double size)
 	}
 	return (ret);
 }
-
 
 void		m4_dup(t_matrix src, t_matrix ret)
 {

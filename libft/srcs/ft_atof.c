@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 07:36:55 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 08:35:06 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 07:02:39 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ double				ft_atod(const char *str)
 	num = 0;
 	neg = FALSE;
 	side = ft_strsplit(str, '.');
+	if (!side[0])
+		return (0);
 	num = ft_atoi(side[0]);
 	if (side[1])
 	{

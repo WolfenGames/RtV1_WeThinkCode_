@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 16:23:17 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 10:20:48 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 07:42:40 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,40 +15,24 @@
 int		get_type(const char *s)
 {
 	char	*p;
+	t_type	ret;
 
+	ret = NONE;
 	p = ft_strmap(s, ft_char_tolower);
 	if (ft_strnequ(p, "eye", 3))
-	{
-		free(p);
-		return (EYE);
-	}
+		ret = EYE;
 	if (ft_strnequ(p, "sphere", 6))
-	{
-		free(p);
-		return (SPHERE);
-	}
+		ret = SPHERE;
 	if (ft_strnequ(p, "plane", 5))
-	{
-		free(p);
-		return (PLANE);
-	}
+		ret = PLANE;
 	if (ft_strnequ(p, "cylinder", 8))
-	{
-		free(p);
-		return (CYLINDER);
-	}
+		ret = CYLINDER;
 	if (ft_strnequ(p, "cone", 4))
-	{
-		free(p);
-		return (CONE);
-	}
+		ret = CONE;
 	if (ft_strnequ(p, "light", 11))
-	{
-		free(p);
-		return (LIGHT);
-	}
+		ret = LIGHT;
 	free(p);
-	return (NONE);
+	return (ret);
 }
 
 void	setprop(t_obj *obj, char *line)
@@ -58,7 +42,7 @@ void	setprop(t_obj *obj, char *line)
 	s = ft_strmap(line, ft_char_tolower);
 	if (ft_strnequ(s, "type", 4))
 		obj->type = get_type(ft_strchr(line, ' ') + 1);
- 	 if (ft_strnequ(s, "fov", 3))
+	if (ft_strnequ(s, "fov", 3))
 		obj->fov = ft_atod(ft_strchr(line, ' ') + 1);
 	if (ft_strnequ(s, "origin", 6))
 		vec_assign(obj, org, ft_strchr(line, ' ') + 1);
@@ -78,7 +62,7 @@ void	setprop(t_obj *obj, char *line)
 	free(s);
 }
 
-void    load_file(int fd, t_raytrace *r)
+void	load_file(int fd, t_raytrace *r)
 {
 	char	*line;
 	char	*tmp;
@@ -94,7 +78,7 @@ void    load_file(int fd, t_raytrace *r)
 			setprop(obj, line + 1);
 		free(line);
 	}
-	if (line)
+	if (line && obj)
 		free(line);
 	apply(r);
 }

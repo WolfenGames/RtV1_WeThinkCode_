@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 17:01:49 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 09:43:19 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 07:29:17 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ t_obj	*new_obj(char *name, t_raytrace *r)
 	free(r->obj);
 	r->obj = new_objs;
 	r->obj[r->objsize - 1].name = ft_strdup(name);
+	valid_objects(&r->obj[r->objsize - 1]);
 	return (&r->obj[r->objsize - 1]);
 }
 
-t_obj   *find_obj(char *name, t_raytrace *r)
+t_obj	*find_obj(char *name, t_raytrace *r)
 {
 	int		i;
 
@@ -38,13 +39,14 @@ t_obj   *find_obj(char *name, t_raytrace *r)
 	}
 	return (new_obj(name, r));
 }
+
 void	calccam(t_obj *cam)
 {
-	t_matrix a;
-	t_vec	b;
+	t_matrix	a;
+	t_vec		b;
 
 	ft_bzero(cam->otw, sizeof(double) * 16);
-    ft_bzero(a, sizeof(double) * 16);
+	ft_bzero(a, sizeof(double) * 16);
 	fill_mat_rot_x(cam->otw, cam->rot[0] * M_PI / 180.0);
 	fill_mat_rot_y(a, cam->rot[1] * M_PI / 180.0);
 	mult_mat(cam->otw, a, cam->otw);

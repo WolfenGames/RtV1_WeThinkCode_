@@ -6,13 +6,13 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 07:05:00 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 08:31:27 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 06:43:33 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/matvec.h"
 
-void    fill_mat_rot_x(double m[4][4], double th)
+void	fill_mat_rot_x(double m[4][4], double th)
 {
 	t_matrix a;
 
@@ -26,7 +26,7 @@ void    fill_mat_rot_x(double m[4][4], double th)
 	m[3][3] = 1;
 }
 
-void    fill_mat_rot_y(double m[4][4], double th)
+void	fill_mat_rot_y(double m[4][4], double th)
 {
 	t_matrix a;
 
@@ -40,7 +40,7 @@ void    fill_mat_rot_y(double m[4][4], double th)
 	m[3][3] = 1;
 }
 
-void    fill_mat_rot_z(double m[4][4], double th)
+void	fill_mat_rot_z(double m[4][4], double th)
 {
 	t_matrix a;
 

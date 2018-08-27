@@ -6,56 +6,13 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:18:45 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 13:06:29 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 07:36:40 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-int		butt(int b, t_raytrace *r)
-{
-	(void)b;
-	(void)r;
-	exit(0);
-	return (0);
-}
-
-int		keys(int key, t_raytrace *r)
-{
-	if (key == 53)
-		butt(0, r);
-	return (0);
-}
-
-int     update(t_raytrace *r)
-{
-	int		x;
-
-	x = 2;
-	while (x < r->objsize)
-	{
-		r->obj[x].rot[0] += 5;
-		r->obj[x].rot[1] += 10;
-		r->obj[x].rot[2] += 15;
-		x++;
-	}
-	apply(r);
-    trace(r);
-    return (0);
-}
-
-void	set_hooks(t_raytrace *r)
-{
-	mlx_hook(r->win, 2, 0, keys, r);
-	mlx_hook(r->win, 17, 0, butt, r);
-//    mlx_loop_hook(r->mlx, update, r);
-	back(r);
-	info(r);
-	trace(r);
-	debug_text(r);
-}
-
-void    valid_scene(t_raytrace *r)
+void	valid_scene(t_raytrace *r)
 {
 	if (r->objsize == 1)
 	{

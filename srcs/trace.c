@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:09:23 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 12:56:05 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 06:35:21 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	back(t_raytrace *r)
 	mlx_put_image_to_window(r->mlx, r->win, r->img[0], 0, 0);
 }
 
-int     obj_index(t_raytrace *r, t_ray *ray, double *n)
+int		obj_index(t_raytrace *r, t_ray *ray, double *n)
 {
-	int     x;
+	int		x;
 	int		col;
 
 	col = -1;
@@ -80,23 +80,6 @@ int     obj_index(t_raytrace *r, t_ray *ray, double *n)
 		x++;
 	}
 	return (col);
-}
-
-int		lightstuff(t_obj *o, t_raytrace *r)
-{
-	t_ray	ray;
-	t_vec	tmp;
-	double	n;
-
-	vec_dup(o->point, ray.org);
-	minus_vec_vec(LSO, ray.org, ray.dir);
-	n = vec_len(ray.dir);
-	normalise(ray.dir);
-	add_vec_vec(ray.org, mult_vec_f(o->norm, 0.000000001, tmp), ray.org);
-	if (obj_index(r, &ray, &n) != -1)
-		return (scale_colour(o->surface_col, 0.07));
-	return (maxd(scale_colour((colour_grad(scale_colour(o->surface_col, mind(dot(o->norm, ray.dir), 1.0)),
-		o->surface_col, 0.07)), mind(LI / n, 1.0)), scale_colour(o->surface_col, 0.07)));
 }
 
 int		do_da_ray(double pos[], t_raytrace *r)
@@ -121,28 +104,23 @@ int		do_da_ray(double pos[], t_raytrace *r)
 	return (lightstuff(&r->obj[oi], r));
 }
 
-void	tracer(t_raytrace *r)
+void	trace(t_raytrace *r)
 {
 	double	pos[2];
 
+	new_image(r, SCREEN, -200, 0);
 	pos[0] = 0;
 	while (pos[0] < 800)
 	{
 		pos[1] = 0;
 		while (pos[1] < 800)
 		{
-			put_pixel(pos, SCREEN, r, 
+			put_pixel(pos, SCREEN, r,
 					do_da_ray(pos, r));
 			pos[1]++;
 		}
 		pos[0]++;
 	}
-}
-
-void	trace(t_raytrace *r)
-{
-	new_image(r, SCREEN, -200, 0);
-	tracer(r);
 	mlx_put_image_to_window(r->mlx, r->win, r->img[SCREEN], 200, 0);
 	mlx_destroy_image(r->mlx, r->img[SCREEN]);
 }

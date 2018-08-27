@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/31 11:11:36 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/24 12:05:05 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 07:37:02 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,12 @@ void				debug_text(t_raytrace *r);
 void				info(t_raytrace *r);
 void				trace(t_raytrace *r);
 void				back(t_raytrace *r);
-
 void				load_file(int fd, t_raytrace *r);
 void				vec_assign(t_obj *o, t_v v, char *s);
 t_obj				*find_obj(char *name, t_raytrace *r);
 int					scale_colour(int col1, double r);
-
 void				calccam(t_obj *cam);
 void				obj_thingies(t_obj *o);
-
 int					inter_sphere(t_ray *ray, t_obj *obj, double *n);
 int					inter_plane(t_ray *ray, t_obj *obj, double *n);
 int					inter_cone(t_ray *ray, t_obj *obj, double *near);
@@ -120,5 +117,11 @@ int					colour_grad(int col1, int col2, float r);
 char				*get_obj_name(t_type i);
 char				ft_char_tolower(char c);
 char				ft_char_toupper(char c);
+int					butt(int b, t_raytrace *r);
+int					keys(int key, t_raytrace *r);
+void				set_hooks(t_raytrace *r);
+int					lightstuff(t_obj *o, t_raytrace *r);
+int					obj_index(t_raytrace *r, t_ray *ray, double *n);
+void				valid_objects(t_obj *obj);
 
 #endif

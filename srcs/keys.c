@@ -1,37 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vecs.c                                             :+:      :+:    :+:   */
+/*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/16 07:38:09 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/27 06:36:19 by jwolf            ###   ########.fr       */
+/*   Created: 2018/08/27 06:24:25 by jwolf             #+#    #+#             */
+/*   Updated: 2018/08/27 06:37:49 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include "string.h"
 
-void	vec_assign(t_obj *o, t_v v, char *s)
+int		butt(int b, t_raytrace *r)
 {
-	char	**sp;
-	int		i;
+	(void)b;
+	(void)r;
+	exit(0);
+	return (0);
+}
 
-	sp = ft_strsplit(s, ',');
-	i = 0;
-	while (i < 3 && sp[i])
-	{
-		if (v == org)
-			o->org[i] = ft_atod(sp[i]);
-		if (v == ROT)
-			o->rot[i] = (double)ft_atod(sp[i]);
-		if (v == SIZE)
-			o->size[i] = (double)ft_atod(sp[i]);
-		free(sp[i]);
-		i++;
-	}
-	if (sp[i])
-		free(sp[i]);
-	free(sp);
+int		keys(int key, t_raytrace *r)
+{
+	if (key == 53)
+		butt(0, r);
+	return (0);
+}
+
+void	set_hooks(t_raytrace *r)
+{
+	mlx_hook(r->win, 2, 0, keys, r);
+	mlx_hook(r->win, 17, 0, butt, r);
+	back(r);
+	info(r);
+	trace(r);
+	debug_text(r);
 }
