@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 08:18:45 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/27 07:36:40 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 07:51:54 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	valid_scene(t_raytrace *r)
 {
-	if (r->objsize == 1)
+	if (r->objsize == 2)
 	{
 		ft_putendl("I work better with more than a Camera...");
+		ft_putendl("And more than a light source");
 	}
 }
 

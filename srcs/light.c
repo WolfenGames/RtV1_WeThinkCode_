@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/27 06:34:22 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/27 06:52:26 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 07:53:04 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,3 @@ int		lightstuff(t_obj *o, t_raytrace *r)
 		o->surface_col, 0.07)), mind(LI / n, 1.0)),
 		scale_colour(o->surface_col, 0.07)));
 }
-
