@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 07:38:09 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/27 06:36:19 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 10:20:54 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	vec_assign(t_obj *o, t_v v, char *s)
 		if (v == org)
 			o->org[i] = ft_atod(sp[i]);
 		if (v == ROT)
-			o->rot[i] = (double)ft_atod(sp[i]);
+			o->rot[i] = ft_atod(sp[i]);
 		if (v == SIZE)
-			o->size[i] = (double)ft_atod(sp[i]);
+			o->size[i] = ft_atod(sp[i]);
 		free(sp[i]);
 		i++;
 	}

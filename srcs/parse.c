@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@42.FR>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/15 16:23:17 by jwolf             #+#    #+#             */
-/*   Updated: 2018/08/27 07:42:40 by jwolf            ###   ########.fr       */
+/*   Updated: 2018/08/27 10:19:53 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,24 @@ void	setprop(t_obj *obj, char *line)
 	char	*s;
 
 	s = ft_strmap(line, ft_char_tolower);
-	if (ft_strnequ(s, "type", 4))
+	if (ft_strnequ(s, "type ", 5))
 		obj->type = get_type(ft_strchr(line, ' ') + 1);
-	if (ft_strnequ(s, "fov", 3))
+	if (ft_strnequ(s, "fov ", 4))
 		obj->fov = ft_atod(ft_strchr(line, ' ') + 1);
-	if (ft_strnequ(s, "origin", 6))
+	if (ft_strnequ(s, "origin ", 7))
 		vec_assign(obj, org, ft_strchr(line, ' ') + 1);
-	if (ft_strnequ(s, "rotation", 8))
+	if (ft_strnequ(s, "rotation ", 9))
 		vec_assign(obj, ROT, ft_strchr(line, ' ') + 1);
-	if (ft_strnequ(s, "size", 4))
+	if (ft_strnequ(s, "size ", 5))
 		vec_assign(obj, SIZE, ft_strchr(line, ' ') + 1);
-	if (ft_strnequ(s, "radius", 6))
+	if (ft_strnequ(s, "radius ", 7))
 	{
 		obj->radius = ft_atod(ft_strchr(line, ' ') + 1);
 		obj->radius2 = obj->radius * obj->radius;
 	}
-	if (ft_strnequ(s, "color", 5))
+	if (ft_strnequ(s, "color ", 6))
 		obj->surface_col = get_col(ft_strchr(line, ' ') + 1);
-	if (ft_strnequ(s, "intensity", 8))
+	if (ft_strnequ(s, "intensity ", 9))
 		obj->intensity = ft_atod(ft_strchr(line, ' ') + 1);
 	free(s);
 }
